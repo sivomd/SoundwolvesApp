@@ -85,13 +85,24 @@ export const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
+        {/* Background Video/Image with Overlay */}
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1764510383709-14be6ec28548"
-            alt="DJ Performance"
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
             className="w-full h-full object-cover"
-          />
+            poster="https://images.unsplash.com/photo-1764510383709-14be6ec28548"
+          >
+            <source src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/o4oqtw3l_SoundWolves.mp4" type="video/mp4" />
+            {/* Fallback to image if video doesn't load */}
+            <img
+              src="https://images.unsplash.com/photo-1764510383709-14be6ec28548"
+              alt="DJ Performance"
+              className="w-full h-full object-cover"
+            />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
         </div>
 

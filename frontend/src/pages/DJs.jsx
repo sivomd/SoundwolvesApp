@@ -178,7 +178,7 @@ export const DJs = () => {
                             variant="ghost"
                             size="icon"
                             className="hover:text-destructive"
-                            onClick={() => toggleFollow(dj.id)}
+                            onClick={() => toggleFollow(dj.id, dj.name)}
                           >
                             <Heart
                               className={`w-5 h-5 ${followedDJs.includes(dj.id) ? 'fill-destructive text-destructive' : ''}`}

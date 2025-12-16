@@ -278,7 +278,11 @@ export const DJs = () => {
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
               Join SOUNDWOLVES and connect with thousands of event organizers looking for talented DJs
             </p>
-            <Button variant="premium" size="lg">
+            <Button 
+              variant="premium" 
+              size="lg"
+              onClick={() => navigate('/login')}
+            >
               Join as DJ/Promoter
             </Button>
           </CardContent>

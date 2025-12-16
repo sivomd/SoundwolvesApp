@@ -27,6 +27,9 @@ function App() {
             <Route path="/tickets" element={<Tickets />} />
             <Route path="/membership" element={<Membership />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dj-profile-setup" element={<DJProfileSetup />} />
+            <Route path="/dj-dashboard" element={<DJDashboard />} />
           </Routes>
         </main>
         <BottomNav />

@@ -108,20 +108,38 @@ export const Home = () => {
   const topDJs = [
     {
       id: 1,
-      name: 'DJ OM',
-      specialty: 'Bollywood • EDM • Hip Hop',
+      name: 'DJ Rekha',
+      specialty: 'Bollywood • Bhangra • Global Bass',
       image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
-      followers: '12.5K',
-      upcomingShows: 8,
+      followers: '18.5K',
+      upcomingShows: 12,
       verified: true
     },
     {
       id: 2,
-      name: 'DJ Priya',
-      specialty: 'Punjabi • Trap • Remix',
+      name: 'DJ Suri',
+      specialty: 'Punjabi • Hip Hop • Trap',
       image: 'https://images.unsplash.com/photo-1654031424664-e0e6174fbd26?crop=entropy&cs=srgb&fm=jpg&q=85',
-      followers: '8.2K',
-      upcomingShows: 5,
+      followers: '14.2K',
+      upcomingShows: 9,
+      verified: true
+    },
+    {
+      id: 3,
+      name: 'DJ Karma',
+      specialty: 'Bollywood • EDM • Bhangra',
+      image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
+      followers: '11.8K',
+      upcomingShows: 7,
+      verified: true
+    },
+    {
+      id: 4,
+      name: 'DJ Anish',
+      specialty: 'EDM • Bollywood Remix • Tech House',
+      image: 'https://images.unsplash.com/photo-1654031424664-e0e6174fbd26?crop=entropy&cs=srgb&fm=jpg&q=85',
+      followers: '9.6K',
+      upcomingShows: 6,
       verified: true
     }
   ];

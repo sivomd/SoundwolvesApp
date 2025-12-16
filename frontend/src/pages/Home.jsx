@@ -109,6 +109,14 @@ export const Home = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide pb-2">
             <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+            <Button
+              variant={selectedCity === 'All' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setSelectedCity('All')}
+              className="flex-shrink-0"
+            >
+              All Cities
+            </Button>
             {cities.map((city) => (
               <Button
                 key={city}

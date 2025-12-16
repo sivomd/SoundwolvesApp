@@ -30,9 +30,11 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 gradient-wolf rounded-lg flex items-center justify-center shadow-glow-accent">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
+            <img 
+              src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/qg39p13p_Stylized%20Wolf%20Emblem%20with%20Mandala%20Pattern.png" 
+              alt="SoundWolves Logo"
+              className="w-10 h-10 object-contain"
+            />
             <span className="text-xl font-display font-bold text-gradient-gold hidden sm:block">
               SOUNDWOLVES
             </span>

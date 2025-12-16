@@ -12,6 +12,8 @@ import Profile from '@/pages/Profile';
 import Login from '@/pages/Login';
 import DJProfileSetup from '@/pages/DJProfileSetup';
 import DJDashboard from '@/pages/DJDashboard';
+import EventDetail from '@/pages/EventDetail';
+import DJDetail from '@/pages/DJDetail';
 import '@/App.css';
 
 function App() {

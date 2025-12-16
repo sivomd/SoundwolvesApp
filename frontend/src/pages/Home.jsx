@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 
 export const Home = () => {
   const [selectedCity, setSelectedCity] = useState('Toronto');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const cities = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'New York', 'Los Angeles'];
 

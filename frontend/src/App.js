@@ -9,6 +9,9 @@ import DJs from '@/pages/DJs';
 import Tickets from '@/pages/Tickets';
 import Membership from '@/pages/Membership';
 import Profile from '@/pages/Profile';
+import Login from '@/pages/Login';
+import DJProfileSetup from '@/pages/DJProfileSetup';
+import DJDashboard from '@/pages/DJDashboard';
 import '@/App.css';
 
 function App() {

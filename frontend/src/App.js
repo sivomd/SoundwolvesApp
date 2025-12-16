@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { BottomNav } from '@/components/BottomNav';
+import { LiveChat } from '@/components/LiveChat';
 import { Toaster } from '@/components/ui/sonner';
 import Home from '@/pages/Home';
 import Events from '@/pages/Events';

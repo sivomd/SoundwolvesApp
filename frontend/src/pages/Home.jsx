@@ -1,0 +1,345 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Zap, MapPin, Calendar, Users, Star, ArrowRight, Crown, Sparkles, TrendingUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+
+export const Home = () => {
+  const [selectedCity, setSelectedCity] = useState('Toronto');
+
+  const cities = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'New York', 'Los Angeles'];
+
+  const featuredEvents = [
+    {
+      id: 1,
+      title: 'Diwali Nights: The Grand Celebration',
+      artist: 'DJ OM',
+      venue: 'Royal Banquet Hall',
+      city: 'Toronto',
+      date: 'Nov 15, 2024',
+      time: '9:00 PM',
+      image: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd?crop=entropy&cs=srgb&fm=jpg&q=85',
+      price: '$75',
+      vipPrice: '$150',
+      tags: ['VIP Tables', 'After Party', 'Limited'],
+      attendees: 234,
+      trending: true
+    },
+    {
+      id: 2,
+      title: 'Bollywood Bass Night',
+      artist: 'DJ Priya & Friends',
+      venue: 'Cube Nightclub',
+      city: 'Toronto',
+      date: 'Nov 22, 2024',
+      time: '10:00 PM',
+      image: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475?crop=entropy&cs=srgb&fm=jpg&q=85',
+      price: '$45',
+      vipPrice: '$120',
+      tags: ['Backstage Pass', 'VIP Bar'],
+      attendees: 189,
+      trending: false
+    },
+    {
+      id: 3,
+      title: 'New Year Eve Bash 2025',
+      artist: 'DJ OM & Special Guests',
+      venue: 'Harbour Event Center',
+      city: 'Toronto',
+      date: 'Dec 31, 2024',
+      time: '8:00 PM',
+      image: 'https://images.unsplash.com/photo-1763630054569-0e012e52616d?crop=entropy&cs=srgb&fm=jpg&q=85',
+      price: '$150',
+      vipPrice: '$350',
+      tags: ['VIP Tables', 'Champagne', 'Exclusive'],
+      attendees: 456,
+      trending: true
+    }
+  ];
+
+  const topDJs = [
+    {
+      id: 1,
+      name: 'DJ OM',
+      specialty: 'Bollywood • EDM • Hip Hop',
+      image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
+      followers: '12.5K',
+      upcomingShows: 8,
+      verified: true
+    },
+    {
+      id: 2,
+      name: 'DJ Priya',
+      specialty: 'Punjabi • Trap • Remix',
+      image: 'https://images.unsplash.com/photo-1654031424664-e0e6174fbd26?crop=entropy&cs=srgb&fm=jpg&q=85',
+      followers: '8.2K',
+      upcomingShows: 5,
+      verified: true
+    }
+  ];
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1764510383709-14be6ec28548"
+            alt="DJ Performance"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center animate-fade-in">
+          <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 backdrop-blur-sm">
+            <Sparkles className="w-3 h-3 mr-1" />
+            The Cultural Nightlife Operating System
+          </Badge>
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight">
+            Experience <span className="text-gradient-gold">Nightlife</span>
+            <br />
+            Like Never Before
+          </h1>
+          <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+            Discover exclusive events, book legendary DJs, and unlock VIP experiences across North America's hottest venues
+          </p>
+          
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto glass-card p-2 rounded-xl mb-6">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Input
+                type="text"
+                placeholder="Search events, DJs, venues..."
+                className="flex-1 bg-background/50 border-border/50"
+              />
+              <Button variant="premium" size="lg">
+                <Zap className="w-5 h-5 mr-2" />
+                Explore Now
+              </Button>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">50K+ Members</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">500+ Events Monthly</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">200+ Top DJs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* City Selector */}
+      <section className="py-8 border-b border-border/50">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide pb-2">
+            <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+            {cities.map((city) => (
+              <Button
+                key={city}
+                variant={selectedCity === city ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setSelectedCity(city)}
+                className="flex-shrink-0"
+              >
+                {city}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Events */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-2">
+                🔥 Trending in <span className="text-gradient-gold">{selectedCity}</span>
+              </h2>
+              <p className="text-muted-foreground">Don't miss these exclusive experiences</p>
+            </div>
+            <Link to="/events">
+              <Button variant="ghost" className="hidden sm:flex">
+                View All
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredEvents.map((event) => (
+              <Card key={event.id} className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
+                {/* Event Image */}
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                  
+                  {/* Badges */}
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    {event.trending && (
+                      <Badge className="bg-destructive/90 text-white backdrop-blur-sm">
+                        <TrendingUp className="w-3 h-3 mr-1" />
+                        Trending
+                      </Badge>
+                    )}
+                    {event.tags.slice(0, 1).map((tag) => (
+                      <Badge key={tag} className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
+                        <Crown className="w-3 h-3 mr-1" />
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Attendees */}
+                  <div className="absolute bottom-3 right-3 flex items-center gap-2 glass-card px-3 py-1.5 rounded-full">
+                    <Users className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">{event.attendees}</span>
+                  </div>
+                </div>
+
+                <CardContent className="p-5 space-y-3">
+                  <div>
+                    <h3 className="text-xl font-display font-bold mb-1 group-hover:text-primary transition-colors">
+                      {event.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm">{event.artist}</p>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-sm">
+                    <MapPin className="w-4 h-4 text-muted-foreground" />
+                    <span>{event.venue}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-sm">
+                    <Calendar className="w-4 h-4 text-muted-foreground" />
+                    <span>{event.date} • {event.time}</span>
+                  </div>
+
+                  <div className="pt-3 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-muted-foreground">From</p>
+                      <p className="text-2xl font-bold text-primary">{event.price}</p>
+                    </div>
+                    <Button variant="premium" size="sm">
+                      Get Tickets
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Top DJs Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-2">
+                Featured <span className="text-gradient-wolf">DJs</span>
+              </h2>
+              <p className="text-muted-foreground">Book the hottest talent in the game</p>
+            </div>
+            <Link to="/djs">
+              <Button variant="ghost" className="hidden sm:flex">
+                View All DJs
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {topDJs.map((dj) => (
+              <Card key={dj.id} className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
+                <div className="flex gap-5 p-5">
+                  <div className="relative flex-shrink-0">
+                    <div className="w-24 h-24 rounded-xl overflow-hidden ring-2 ring-primary/20 group-hover:ring-primary transition-all">
+                      <img
+                        src={dj.image}
+                        alt={dj.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {dj.verified && (
+                      <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-primary rounded-full flex items-center justify-center shadow-glow">
+                        <Star className="w-4 h-4 text-primary-foreground fill-current" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-display font-bold mb-1 group-hover:text-primary transition-colors">
+                      {dj.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-3">{dj.specialty}</p>
+                    
+                    <div className="flex items-center gap-4 text-sm mb-4">
+                      <div className="flex items-center gap-1">
+                        <Users className="w-4 h-4 text-muted-foreground" />
+                        <span>{dj.followers}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <span>{dj.upcomingShows} shows</span>
+                      </div>
+                    </div>
+
+                    <Button variant="vip" size="sm" className="w-full sm:w-auto">
+                      View Profile
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Membership CTA */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-vip opacity-50" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <Crown className="w-16 h-16 text-primary mx-auto mb-6 animate-glow" />
+            <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4">
+              Join the <span className="text-gradient-gold">Wolves Pack</span>
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Unlock exclusive VIP experiences, early access to tickets, backstage passes, and connect with the hottest nightlife community
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="premium" size="lg">
+                <Crown className="w-5 h-5 mr-2" />
+                Get Wolves Pass
+              </Button>
+              <Button variant="outline" size="lg">
+                Learn More
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;

@@ -154,6 +154,8 @@ export const Events = () => {
                 type="text"
                 placeholder="Search events, artists, venues..."
                 className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <Select value={selectedFilter} onValueChange={setSelectedFilter}>

@@ -7,6 +7,14 @@ import { cn } from '@/lib/utils';
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  React.useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('soundwolves_current_user') || '{}');
+    if (user.id) {
+      setCurrentUser(user);
+    }
+  }, [location]);
 
   const navItems = [
     { path: '/', label: 'Discover', icon: Zap },

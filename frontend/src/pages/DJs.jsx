@@ -33,98 +33,60 @@ export const DJs = () => {
   const djs = [
     {
       id: 1,
-      name: 'DJ Rekha',
-      tagline: 'Pioneer of Basement Bhangra',
-      specialty: 'Bollywood • Bhangra • Global Bass',
+      name: 'DJ OM',
+      tagline: 'Mixing Culture & Bass',
+      specialty: 'Bollywood • EDM • Hip Hop',
       image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
       coverImage: 'https://images.unsplash.com/photo-1764510383709-14be6ec28548',
-      followers: '18.5K',
-      upcomingShows: 12,
+      followers: '25.3K',
+      upcomingShows: 15,
       verified: true,
-      bio: 'NYC-based DJ Rekha is the founder of Basement Bhangra, bringing South Asian sounds to mainstream nightlife since 1997. Featured in Rolling Stone and NPR.',
-      cities: ['New York', 'Brooklyn', 'Jersey City'],
+      bio: 'NYC-based DJ OM is known for explosive Bollywood and EDM fusion sets that pack dance floors across the tri-state area. Regular performer at Brooklyn Bowl, Sony Hall, and major venues.',
+      cities: ['New York', 'Brooklyn', 'Philadelphia'],
       socialMedia: {
-        instagram: '@djrekha'
+        instagram: '@the.dj.om'
       },
-      priceRange: '$3,500 - $7,000',
+      priceRange: '$3,800 - $7,500',
       rating: 4.9,
-      totalBookings: 287
+      totalBookings: 342
     },
     {
       id: 2,
-      name: 'DJ Suri',
-      tagline: 'The Punjabi Bass King',
-      specialty: 'Punjabi • Hip Hop • Trap',
+      name: 'DJ KYA',
+      tagline: 'The Punjabi Powerhouse',
+      specialty: 'Punjabi • Bhangra • Trap',
       image: 'https://images.unsplash.com/photo-1654031424664-e0e6174fbd26?crop=entropy&cs=srgb&fm=jpg&q=85',
       coverImage: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475',
-      followers: '14.2K',
-      upcomingShows: 9,
+      followers: '18.7K',
+      upcomingShows: 12,
       verified: true,
-      bio: 'New Jersey-based DJ Suri specializes in Punjabi trap and hip-hop fusion. Regular performer at major tri-state area venues.',
+      bio: 'DJ KYA brings high-energy Punjabi and bhangra beats to the tri-state nightlife scene. Known for explosive sets that blend traditional dhol with modern trap beats.',
       cities: ['New Jersey', 'Newark', 'New York'],
       socialMedia: {
-        instagram: '@djsuri.official'
+        instagram: '@kyathedj'
       },
-      priceRange: '$2,500 - $5,500',
-      rating: 4.8,
-      totalBookings: 198
+      priceRange: '$3,200 - $6,800',
+      rating: 4.9,
+      totalBookings: 298
     },
     {
       id: 3,
-      name: 'DJ Karma',
-      tagline: 'EDM Meets Bollywood',
-      specialty: 'Bollywood • EDM • Bhangra',
+      name: 'DJ PANDA',
+      tagline: 'Side Quest Master',
+      specialty: 'EDM • Bollywood • House',
       image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
       coverImage: 'https://images.unsplash.com/photo-1763630054569-0e012e52616d',
-      followers: '11.8K',
-      upcomingShows: 7,
+      followers: '22.1K',
+      upcomingShows: 14,
       verified: true,
-      bio: 'Philadelphia and NYC DJ known for high-energy Bollywood EDM fusion sets. Featured at Sony Hall and major festivals.',
+      bio: 'DJ PANDA specializes in progressive house and Bollywood remixes. Known for creating unique musical journeys that keep crowds moving all night. Featured at major festivals and premier nightclubs.',
       cities: ['New York', 'Philadelphia', 'Jersey City'],
       socialMedia: {
-        instagram: '@djkarma.nyc'
+        instagram: '@sidequestpanda'
       },
-      priceRange: '$2,800 - $6,000',
+      priceRange: '$3,500 - $7,200',
       rating: 4.9,
-      totalBookings: 165
-    },
-    {
-      id: 4,
-      name: 'DJ Anish',
-      tagline: 'Tech House & Bollywood Remix',
-      specialty: 'EDM • Bollywood Remix • Tech House',
-      image: 'https://images.unsplash.com/photo-1654031424664-e0e6174fbd26?crop=entropy&cs=srgb&fm=jpg&q=85',
-      coverImage: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd',
-      followers: '9.6K',
-      upcomingShows: 6,
-      verified: true,
-      bio: 'Newark-based producer and DJ specializing in Bollywood remixes with tech house and progressive elements.',
-      cities: ['Newark', 'New York', 'Jersey City'],
-      socialMedia: {
-        instagram: '@djanish.music'
-      },
-      priceRange: '$2,200 - $4,800',
-      rating: 4.7,
-      totalBookings: 134
-    },
-    {
-      id: 5,
-      name: 'DJ Navv',
-      tagline: 'Desi Festival Specialist',
-      specialty: 'Festival • Bhangra • Bollywood',
-      image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
-      coverImage: 'https://images.unsplash.com/photo-1643981693404-d76e58594bbf',
-      followers: '8.9K',
-      upcomingShows: 5,
-      verified: true,
-      bio: 'Jersey City DJ specializing in large-scale Desi festivals and cultural events. Known for family-friendly performances.',
-      cities: ['Jersey City', 'Newark', 'New York'],
-      socialMedia: {
-        instagram: '@djnavv.live'
-      },
-      priceRange: '$1,800 - $4,200',
-      rating: 4.8,
-      totalBookings: 112
+      totalBookings: 315
     }
   ];
 

@@ -8,16 +8,17 @@ import { Input } from '@/components/ui/input';
 import { events, djs, cities, getTrendingEvents } from '@/data/mockData';
 import { TrendingSection } from '@/components/TrendingSection';
 import { RecommendedEvents } from '@/components/RecommendedEvents';
+import { TrendingMusicReleases } from '@/components/TrendingMusicReleases';
 import { EventCountdown } from '@/components/EventCountdown';
 import { FriendsAttending } from '@/components/FriendsAttending';
 
 export const Home = () => {
-  const [selectedCity, setSelectedCity] = useState('New York');
+  const [selectedCity, setSelectedCity] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Get featured events based on selected city (trending + upcoming)
+  // Get featured events based on selected city (show all if "All" selected)
   const featuredEvents = events
-    .filter(event => event.city === selectedCity || event.trending)
+    .filter(event => selectedCity === 'All' || event.city === selectedCity)
     .slice(0, 6);
 
   const topDJs = djs.slice(0, 3);

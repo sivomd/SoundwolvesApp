@@ -132,13 +132,44 @@ export const Navbar = () => {
               );
             })}
             <div className="pt-4 space-y-2">
-              <Button variant="outline" className="w-full justify-start">
-                <User className="w-5 h-5 mr-2" />
-                Profile
-              </Button>
-              <Button variant="premium" className="w-full">
-                Get VIP Access
-              </Button>
+              {currentUser ? (
+                <>
+                  <Link 
+                    to={currentUser.type === 'dj' ? '/dj-dashboard' : '/profile'}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Button variant="outline" className="w-full justify-start">
+                      <User className="w-5 h-5 mr-2" />
+                      {currentUser.djName || currentUser.name}
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="destructive" 
+                    className="w-full"
+                    onClick={() => {
+                      localStorage.removeItem('soundwolves_current_user');
+                      setCurrentUser(null);
+                      setIsOpen(false);
+                      window.location.href = '/';
+                    }}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setIsOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      Login / Sign Up
+                    </Button>
+                  </Link>
+                  <Link to="/membership" onClick={() => setIsOpen(false)}>
+                    <Button variant="premium" className="w-full">
+                      Get VIP Access
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

@@ -14,6 +14,7 @@ import {
 
 export const Events = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const events = [
     {

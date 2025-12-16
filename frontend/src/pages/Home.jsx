@@ -316,12 +316,13 @@ export const Home = () => {
                       </div>
                     </div>
 
-                    <Button variant="vip" size="sm" className="w-full sm:w-auto">
+                    <Button variant="vip" size="sm" className="w-full sm:w-auto" onClick={(e) => e.stopPropagation()}>
                       View Profile
                     </Button>
                   </div>
                 </div>
               </Card>
+              </Link>
             ))}
           </div>
         </div>

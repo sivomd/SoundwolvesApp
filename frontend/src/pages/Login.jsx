@@ -102,9 +102,9 @@ export const Login = () => {
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-8">
           <img 
-            src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/qg39p13p_Stylized%20Wolf%20Emblem%20with%20Mandala%20Pattern.png" 
+            src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/tjj77kbh_SoundWolves.png" 
             alt="SoundWolves Logo"
-            className="w-16 h-16 mx-auto mb-4 object-contain"
+            className="h-16 mx-auto mb-4 object-contain"
           />
           <h1 className="text-4xl sm:text-5xl font-display font-bold mb-3">
             Join the <span className="text-gradient-gold">Wolves Pack</span>

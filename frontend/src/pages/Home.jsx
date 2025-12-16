@@ -192,7 +192,8 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredEvents.map((event) => (
-              <Card key={event.id} className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
+              <Link key={event.id} to={`/event/${event.id}`}>
+                <Card className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
                 {/* Event Image */}
                 <div className="relative h-56 overflow-hidden">
                   <img

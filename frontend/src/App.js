@@ -38,6 +38,7 @@ function App() {
           </Routes>
         </main>
         <BottomNav />
+        <LiveChat />
         <Toaster />
       </BrowserRouter>
     </div>

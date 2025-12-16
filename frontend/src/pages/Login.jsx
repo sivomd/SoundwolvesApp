@@ -101,9 +101,11 @@ export const Login = () => {
     <div className="min-h-screen pt-20 pb-24 md:pb-8 flex items-center justify-center">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 gradient-wolf rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-glow-accent">
-            <Zap className="w-8 h-8 text-white" />
-          </div>
+          <img 
+            src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/qg39p13p_Stylized%20Wolf%20Emblem%20with%20Mandala%20Pattern.png" 
+            alt="SoundWolves Logo"
+            className="w-16 h-16 mx-auto mb-4 object-contain"
+          />
           <h1 className="text-4xl sm:text-5xl font-display font-bold mb-3">
             Join the <span className="text-gradient-gold">Wolves Pack</span>
           </h1>

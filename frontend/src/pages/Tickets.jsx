@@ -357,7 +357,14 @@ export const Tickets = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   Get $20 credit for every friend who makes their first purchase
                 </p>
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(`${window.location.origin}?ref=user123`);
+                    toast.success('Referral link copied to clipboard!');
+                  }}
+                >
                   Share Referral Link
                 </Button>
               </div>

@@ -199,10 +199,18 @@ export const Tickets = () => {
                           </p>
                         </div>
                         <div className="flex gap-2 w-full sm:w-auto">
-                          <Button variant="outline" className="flex-1 sm:flex-none">
+                          <Button 
+                            variant="outline" 
+                            className="flex-1 sm:flex-none"
+                            onClick={() => handleViewQR(ticket)}
+                          >
                             View QR
                           </Button>
-                          <Button variant="premium" className="flex-1 sm:flex-none">
+                          <Button 
+                            variant="premium" 
+                            className="flex-1 sm:flex-none"
+                            onClick={() => handleTransfer(ticket)}
+                          >
                             Transfer
                           </Button>
                         </div>

@@ -329,6 +329,7 @@ export const Tickets = () => {
                               <Button
                                 variant={index === 2 ? 'premium' : 'default'}
                                 disabled={quantity === 0}
+                                onClick={() => handleAddToCart(event, tier, quantity)}
                               >
                                 Add to Cart ${(tier.price * quantity).toFixed(2)}
                               </Button>

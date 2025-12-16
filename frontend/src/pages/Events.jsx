@@ -192,8 +192,14 @@ export const Events = () => {
         </div>
 
         {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+        {filteredEvents.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-xl text-muted-foreground mb-4">No events found</p>
+            <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredEvents.map((event) => (
             <Card key={event.id} className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
               {/* Event Image */}
               <div className="relative h-56 overflow-hidden">

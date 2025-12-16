@@ -10,7 +10,7 @@ export const Home = () => {
   const [selectedCity, setSelectedCity] = useState('Toronto');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const cities = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'New York', 'Los Angeles'];
+  const cities = ['New York', 'New Jersey', 'Philadelphia', 'Newark', 'Jersey City', 'Brooklyn'];
 
   const featuredEvents = [
     {

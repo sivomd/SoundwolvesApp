@@ -268,7 +268,8 @@ export const Events = () => {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+                </Card>
+              </Link>
           ))}
         </div>
         )}

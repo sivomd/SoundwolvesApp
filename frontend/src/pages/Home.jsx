@@ -119,7 +119,11 @@ export const Home = () => {
                 className="flex-1 bg-background/50 border-border/50"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && window.location.href = `/events?search=${searchQuery}`}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    window.location.href = `/events?search=${searchQuery}`;
+                  }
+                }}
               />
               <Link to={`/events?search=${searchQuery}`}>
                 <Button variant="premium" size="lg">

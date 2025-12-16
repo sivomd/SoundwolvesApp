@@ -316,7 +316,15 @@ export const Home = () => {
                       </div>
                     </div>
 
-                    <Button variant="vip" size="sm" className="w-full sm:w-auto" onClick={(e) => e.stopPropagation()}>
+                    <Button 
+                      variant="vip" 
+                      size="sm" 
+                      className="w-full sm:w-auto" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = `/dj/${dj.id}`;
+                      }}
+                    >
                       View Profile
                     </Button>
                   </div>

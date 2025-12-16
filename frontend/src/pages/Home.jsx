@@ -138,6 +138,9 @@ export const Home = () => {
       {/* Recommended For You */}
       <RecommendedEvents limit={4} />
 
+      {/* Latest Trending Music Releases */}
+      <TrendingMusicReleases limit={6} />
+
       {/* Featured Events by City */}
       <section className="py-16">
         <div className="container mx-auto px-4">

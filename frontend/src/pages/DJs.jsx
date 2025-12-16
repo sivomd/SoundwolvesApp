@@ -184,7 +184,14 @@ export const DJs = () => {
                               className={`w-5 h-5 ${followedDJs.includes(dj.id) ? 'fill-destructive text-destructive' : ''}`}
                             />
                           </Button>
-                          <Button variant="ghost" size="icon">
+                          <Button 
+                            variant="ghost" 
+                            size="icon"
+                            onClick={() => {
+                              navigator.clipboard.writeText(`${window.location.origin}/dj/${dj.id}`);
+                              toast.success('Profile link copied to clipboard!');
+                            }}
+                          >
                             <Share2 className="w-5 h-5" />
                           </Button>
                         </div>

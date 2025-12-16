@@ -18,15 +18,26 @@ export const Login = () => {
 
   const handleUserLogin = (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('soundwolves_users') || '[]');
-    const user = users.find(u => u.email === userLoginData.email && u.password === userLoginData.password);
-    
-    if (user) {
-      localStorage.setItem('soundwolves_current_user', JSON.stringify({ ...user, type: 'user' }));
-      toast.success('Welcome back to SOUNDWOLVES!');
+    // For demo: Allow any email/password - create user on the fly
+    if (userLoginData.email && userLoginData.password) {
+      const mockUserData = {
+        id: Date.now(),
+        name: userLoginData.email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+        email: userLoginData.email,
+        avatar: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
+        location: 'New York, NY',
+        memberSince: 'Dec 2024',
+        tier: 'Gold',
+        stats: { eventsAttended: 24, following: 8, referrals: 3, points: 1240 },
+        type: 'user'
+      };
+      localStorage.setItem('soundwolves_logged_in', 'true');
+      localStorage.setItem('soundwolves_user', JSON.stringify(mockUserData));
+      localStorage.setItem('soundwolves_current_user', JSON.stringify(mockUserData));
+      toast.success('Welcome to SOUNDWOLVES!');
       navigate('/');
     } else {
-      toast.error('Invalid credentials. Please try again.');
+      toast.error('Please enter email and password');
     }
   };
 

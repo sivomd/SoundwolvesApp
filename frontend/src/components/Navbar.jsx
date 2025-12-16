@@ -1,0 +1,112 @@
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+export const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const navItems = [
+    { path: '/', label: 'Discover', icon: Zap },
+    { path: '/events', label: 'Events', icon: Calendar },
+    { path: '/djs', label: 'DJs', icon: Users },
+    { path: '/tickets', label: 'Tickets', icon: Ticket },
+    { path: '/membership', label: 'Wolves Pass', icon: Crown }
+  ];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="w-10 h-10 gradient-wolf rounded-lg flex items-center justify-center shadow-glow-accent">
+              <Zap className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-xl font-display font-bold text-gradient-gold hidden sm:block">
+              SOUNDWOLVES
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <Link key={item.path} to={item.path}>
+                  <Button
+                    variant={isActive ? 'default' : 'ghost'}
+                    size="sm"
+                    className={cn(
+                      'flex items-center gap-2',
+                      isActive && 'shadow-glow'
+                    )}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.label}
+                  </Button>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* User Actions */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Button variant="ghost" size="icon">
+              <User className="w-5 h-5" />
+            </Button>
+            <Button variant="premium" size="sm">
+              Get VIP Access
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden py-4 space-y-2 animate-fade-in">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-all',
+                    isActive
+                      ? 'bg-primary text-primary-foreground shadow-glow'
+                      : 'text-foreground hover:bg-muted'
+                  )}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              );
+            })}
+            <div className="pt-4 space-y-2">
+              <Button variant="outline" className="w-full justify-start">
+                <User className="w-5 h-5 mr-2" />
+                Profile
+              </Button>
+              <Button variant="premium" className="w-full">
+                Get VIP Access
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};

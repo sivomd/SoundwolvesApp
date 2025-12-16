@@ -226,7 +226,7 @@ export const Tickets = () => {
                 <p className="text-muted-foreground mb-6">
                   Browse events and book your next experience
                 </p>
-                <Button variant="premium">Explore Events</Button>
+                <Button variant="premium" onClick={() => navigate('/events')}>Explore Events</Button>
               </Card>
             )}
           </TabsContent>

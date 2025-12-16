@@ -9,7 +9,9 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const Tickets = () => {
+  const navigate = useNavigate();
   const [selectedTickets, setSelectedTickets] = useState({});
+  const [cart, setCart] = useState([]);
 
   const upcomingTickets = [
     {

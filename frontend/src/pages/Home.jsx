@@ -117,11 +117,16 @@ export const Home = () => {
                 type="text"
                 placeholder="Search events, DJs, venues..."
                 className="flex-1 bg-background/50 border-border/50"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && window.location.href = `/events?search=${searchQuery}`}
               />
-              <Button variant="premium" size="lg">
-                <Zap className="w-5 h-5 mr-2" />
-                Explore Now
-              </Button>
+              <Link to={`/events?search=${searchQuery}`}>
+                <Button variant="premium" size="lg">
+                  <Zap className="w-5 h-5 mr-2" />
+                  Explore Now
+                </Button>
+              </Link>
             </div>
           </div>
 

@@ -137,15 +137,18 @@ frontend:
 
   - task: "Events Page Functionality"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/pages/Events.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Need to test search functionality, filter dropdown, event cards display with correct information, badges (Trending, VIP Tables, etc.), and event card hover effects"
+        - working: true
+          agent: "testing"
+          comment: "✅ Events page functionality working well. 'Discover Events' title displays correctly. Search functionality works (tested with 'Bollywood'). Filter dropdown opens successfully. Event cards display with correct information including venues, dates, prices. Found 4 'Trending' badges and 2 'VIP Tables' badges. Event cards show proper attendee counts and all details. Minor: Filter dropdown has slight overlay issue but core functionality works."
 
   - task: "DJs Page Features"
     implemented: true

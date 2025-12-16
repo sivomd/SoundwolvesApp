@@ -115,6 +115,23 @@ export const Events = () => {
     }
   ];
 
+  // Filter and search logic
+  const filteredEvents = events.filter(event => {
+    // Search filter
+    const matchesSearch = searchQuery === '' || 
+      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.venue.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.city.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Category filter
+    const matchesFilter = selectedFilter === 'all' || 
+      (selectedFilter === 'trending' && event.trending) ||
+      event.category === selectedFilter;
+
+    return matchesSearch && matchesFilter;
+  });
+
   return (
     <div className="min-h-screen pt-20 pb-24 md:pb-8">
       <div className="container mx-auto px-4">

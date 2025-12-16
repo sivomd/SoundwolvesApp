@@ -147,7 +147,7 @@ export const Home = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold mb-2">
-                🎉 Events in <span className="text-gradient-gold">{selectedCity}</span>
+                🎉 {selectedCity === 'All' ? 'All' : `Events in`} <span className="text-gradient-gold">{selectedCity === 'All' ? 'Events' : selectedCity}</span>
               </h2>
               <p className="text-muted-foreground">Don't miss these exclusive experiences</p>
             </div>

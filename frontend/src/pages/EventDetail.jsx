@@ -1,105 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Calendar, MapPin, Users, Clock, TrendingUp, Crown, Share2, Heart, Ticket, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, Users, Clock, TrendingUp, Crown, Heart, Ticket, ExternalLink, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
+import { getEventById, getDJById } from '@/data/mockData';
+import { EventCountdown } from '@/components/EventCountdown';
+import { SocialShare } from '@/components/SocialShare';
+import { FriendsAttending } from '@/components/FriendsAttending';
 
 export const EventDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
+  const [dj, setDj] = useState(null);
   const [isFavorited, setIsFavorited] = useState(false);
 
-  // Sample events data (in real app, this would come from API/localStorage)
-  const events = [
-    {
-      id: 1,
-      title: 'Diwali Nights: The Grand Celebration',
-      artist: 'DJ OM',
-      artistId: 1,
-      venue: 'Royal Banquet Hall',
-      city: 'Toronto',
-      date: 'Nov 15, 2024',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$75',
-      vipPrice: '$150',
-      tags: ['VIP Tables', 'After Party', 'Limited'],
-      attendees: 234,
-      trending: true,
-      description: 'Join us for the grandest Diwali celebration in Toronto! Experience an unforgettable night of Bollywood beats, traditional performances, and modern EDM fusion by the legendary DJ OM. Limited VIP tables available with bottle service.',
-      highlights: [
-        'Live DJ Performance by DJ OM',
-        'Traditional Diwali Performances',
-        'VIP Tables with Bottle Service',
-        'After Party Access',
-        'Complimentary Welcome Drink',
-        'Professional Photography'
-      ],
-      ticketLink: 'https://www.eventbrite.com'
-    },
-    {
-      id: 2,
-      title: 'Bollywood Bass Night',
-      artist: 'DJ Priya & Friends',
-      artistId: 2,
-      venue: 'Cube Nightclub',
-      city: 'Toronto',
-      date: 'Nov 22, 2024',
-      time: '10:00 PM',
-      image: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$45',
-      vipPrice: '$120',
-      tags: ['Backstage Pass', 'VIP Bar'],
-      attendees: 189,
-      trending: false,
-      description: 'Get ready for an electrifying night of Bollywood hits mixed with heavy bass drops. DJ Priya brings her signature style with special guest DJs throughout the night.',
-      highlights: [
-        'DJ Priya Live Performance',
-        'Special Guest DJs',
-        'VIP Bar Access',
-        'Backstage Meet & Greet',
-        'Exclusive Merchandise',
-        'Open Dance Floor'
-      ],
-      ticketLink: 'https://www.ticketmaster.com'
-    },
-    {
-      id: 3,
-      title: 'New Year Eve Bash 2025',
-      artist: 'DJ OM & Special Guests',
-      artistId: 1,
-      venue: 'Harbour Event Center',
-      city: 'Toronto',
-      date: 'Dec 31, 2024',
-      time: '8:00 PM',
-      image: 'https://images.unsplash.com/photo-1763630054569-0e012e52616d?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$150',
-      vipPrice: '$350',
-      tags: ['VIP Tables', 'Champagne', 'Exclusive'],
-      attendees: 456,
-      trending: true,
-      description: 'Ring in 2025 with the most spectacular New Year celebration! Premium entertainment, champagne toast at midnight, and an unforgettable countdown experience.',
-      highlights: [
-        'DJ OM Headlining Performance',
-        'Special Celebrity Guests',
-        'Midnight Champagne Toast',
-        'Premium VIP Tables',
-        'Gourmet Food Stations',
-        'Fireworks Display',
-        'Professional Photo Booth'
-      ],
-      ticketLink: 'https://www.stubhub.com'
-    }
-  ];
-
   useEffect(() => {
-    const foundEvent = events.find(e => e.id === parseInt(id));
+    const foundEvent = getEventById(id);
     if (foundEvent) {
       setEvent(foundEvent);
+      setDj(getDJById(foundEvent.artistId));
+      
+      // Check if event is favorited
+      const favorites = JSON.parse(localStorage.getItem('soundwolves_favorite_events') || '[]');
+      setIsFavorited(favorites.includes(parseInt(id)));
     } else {
       toast.error('Event not found');
       navigate('/events');
@@ -114,8 +41,27 @@ export const EventDetail = () => {
   };
 
   const toggleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('soundwolves_favorite_events') || '[]');
+    const eventId = parseInt(id);
+    
+    let newFavorites;
+    if (isFavorited) {
+      newFavorites = favorites.filter(fav => fav !== eventId);
+      toast.info('Removed from favorites');
+    } else {
+      newFavorites = [...favorites, eventId];
+      toast.success('Added to favorites!');
+    }
+    
+    localStorage.setItem('soundwolves_favorite_events', JSON.stringify(newFavorites));
     setIsFavorited(!isFavorited);
-    toast.success(isFavorited ? 'Removed from favorites' : 'Added to favorites');
+  };
+
+  const openMaps = () => {
+    if (event?.address) {
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`;
+      window.open(mapsUrl, '_blank');
+    }
   };
 
   if (!event) {
@@ -147,17 +93,10 @@ export const EventDetail = () => {
           >
             <Heart className={`w-5 h-5 ${isFavorited ? 'fill-destructive text-destructive' : ''}`} />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="glass-card hover:bg-background/50"
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-              toast.success('Link copied to clipboard!');
-            }}
-          >
-            <Share2 className="w-5 h-5" />
-          </Button>
+          <SocialShare 
+            title={`${event.title} - SOUNDWOLVES`}
+            description={event.description}
+          />
         </div>
 
         {/* Badges */}
@@ -182,8 +121,8 @@ export const EventDetail = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             <Card className="border-border/50">
-              <CardContent className="p-8">
-                <h1 className="text-4xl sm:text-5xl font-display font-bold mb-4">
+              <CardContent className="p-6 sm:p-8">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold mb-4">
                   {event.title}
                 </h1>
                 
@@ -193,6 +132,14 @@ export const EventDetail = () => {
                       by {event.artist}
                     </Button>
                   </Link>
+                  {dj?.verified && (
+                    <Badge variant="secondary" className="text-xs">Verified</Badge>
+                  )}
+                </div>
+
+                {/* Event Countdown */}
+                <div className="mb-6">
+                  <EventCountdown dateISO={event.dateISO} eventTitle={event.title} />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
@@ -207,24 +154,44 @@ export const EventDetail = () => {
                     <Clock className="w-5 h-5 text-muted-foreground" />
                     <div>
                       <p className="text-xs text-muted-foreground">Time</p>
-                      <p className="font-semibold">{event.time}</p>
+                      <p className="font-semibold">{event.time} - {event.endTime}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 col-span-2 sm:col-span-1">
                     <MapPin className="w-5 h-5 text-muted-foreground" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-xs text-muted-foreground">Venue</p>
                       <p className="font-semibold">{event.venue}</p>
                       <p className="text-xs text-muted-foreground">{event.city}</p>
                     </div>
+                    <Button variant="ghost" size="icon" onClick={openMaps}>
+                      <Navigation className="w-4 h-4" />
+                    </Button>
                   </div>
                   <div className="flex items-center gap-3">
                     <Users className="w-5 h-5 text-muted-foreground" />
                     <div>
                       <p className="text-xs text-muted-foreground">Attending</p>
-                      <p className="font-semibold">{event.attendees} people</p>
+                      <p className="font-semibold">{event.attendees} / {event.capacity}</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Age Restriction Badge */}
+                {event.ageRestriction && (
+                  <Badge variant="outline" className="mb-6">
+                    {event.ageRestriction}
+                  </Badge>
+                )}
+
+                <Separator className="my-6" />
+
+                {/* Friends Attending */}
+                <div className="mb-6">
+                  <FriendsAttending 
+                    friendsAttending={event.friendsAttending} 
+                    eventTitle={event.title}
+                  />
                 </div>
 
                 <Separator className="my-6" />
@@ -251,6 +218,38 @@ export const EventDetail = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* DJ Info Card */}
+            {dj && (
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-display font-bold mb-4">About the DJ</h3>
+                  <Link to={`/dj/${dj.id}`}>
+                    <div className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                      <div className="w-16 h-16 rounded-xl overflow-hidden">
+                        <img src={dj.image} alt={dj.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-lg">{dj.name}</h4>
+                        <p className="text-sm text-muted-foreground">{dj.specialty}</p>
+                        <div className="flex items-center gap-3 mt-1 text-sm">
+                          <span className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {dj.followers}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Badge variant="secondary" className="text-xs">
+                              ⭐ {dj.rating}
+                            </Badge>
+                          </span>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm">View Profile</Button>
+                    </div>
+                  </Link>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Sidebar - Ticket Booking */}
@@ -303,11 +302,11 @@ export const EventDetail = () => {
 
                 <div>
                   <h4 className="font-semibold mb-3">Share this event</h4>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1">Facebook</Button>
-                    <Button variant="outline" size="sm" className="flex-1">Twitter</Button>
-                    <Button variant="outline" size="sm" className="flex-1">WhatsApp</Button>
-                  </div>
+                  <SocialShare 
+                    title={`${event.title} - SOUNDWOLVES`}
+                    description={event.description}
+                    variant="buttons"
+                  />
                 </div>
               </CardContent>
             </Card>

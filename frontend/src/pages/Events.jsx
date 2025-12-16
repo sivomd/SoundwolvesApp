@@ -269,6 +269,8 @@ export const Events = () => {
             </Card>
           ))}
         </div>
+        )}
+        </div>
       </div>
     </div>
   );

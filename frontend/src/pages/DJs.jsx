@@ -128,7 +128,7 @@ export const DJs = () => {
 
         {/* DJs Grid */}
         <div className="space-y-6">
-          {djs.map((dj) => (
+          {allDJs.map((dj) => (
             <Card key={dj.id} className="group overflow-hidden border-border/50 hover-lift">
               {/* Cover Image */}
               <div className="relative h-32 sm:h-40 overflow-hidden">

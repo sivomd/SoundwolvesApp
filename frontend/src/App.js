@@ -32,6 +32,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dj-profile-setup" element={<DJProfileSetup />} />
             <Route path="/dj-dashboard" element={<DJDashboard />} />
+            <Route path="/event/:id" element={<EventDetail />} />
+            <Route path="/dj/:id" element={<DJDetail />} />
           </Routes>
         </main>
         <BottomNav />

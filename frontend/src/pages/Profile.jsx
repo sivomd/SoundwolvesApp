@@ -1,57 +1,74 @@
-import React, { useState } from 'react';
-import { User, Settings, Heart, Calendar, Ticket, Users, Crown, Gift, TrendingUp, MapPin, Edit2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { User, Settings, Heart, Calendar, Ticket, Users, Crown, Gift, TrendingUp, MapPin, Edit2, Star, Clock, Bell, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
+import { toast } from 'sonner';
+import { mockUser, events, djs, getEventById, getDJById } from '@/data/mockData';
 
 export const Profile = () => {
-  const user = {
-    name: 'Arjun Patel',
-    email: 'arjun.patel@email.com',
-    location: 'Toronto, ON',
-    memberSince: 'Jan 2024',
-    tier: 'Gold',
-    avatar: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
-    stats: {
-      eventsAttended: 24,
-      following: 8,
-      referrals: 3,
-      points: 1240
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [favoriteEvents, setFavoriteEvents] = useState([]);
+  const [followingDJs, setFollowingDJs] = useState([]);
+  const [bookingHistory, setBookingHistory] = useState([]);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('soundwolves_logged_in');
+    if (!isLoggedIn) {
+      toast.error('Please login to view your profile');
+      navigate('/login');
+      return;
     }
+
+    // Load user data
+    const storedUser = JSON.parse(localStorage.getItem('soundwolves_user') || 'null');
+    setUser(storedUser || mockUser);
+
+    // Load favorite events from localStorage
+    const favoriteIds = JSON.parse(localStorage.getItem('soundwolves_favorite_events') || '[]');
+    const favEvents = favoriteIds.map(id => getEventById(id)).filter(Boolean);
+    setFavoriteEvents(favEvents);
+
+    // Load following DJs
+    const followedIds = JSON.parse(localStorage.getItem('soundwolves_followed_djs') || '[]');
+    const followedDJs = followedIds.map(id => getDJById(id)).filter(Boolean);
+    setFollowingDJs(followedDJs);
+
+    // Mock booking history
+    setBookingHistory(mockUser.bookingHistory.map(booking => ({
+      ...booking,
+      event: getEventById(booking.eventId)
+    })).filter(b => b.event));
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('soundwolves_logged_in');
+    localStorage.removeItem('soundwolves_user');
+    toast.success('Logged out successfully');
+    navigate('/');
   };
 
-  const upcomingEvents = [
-    {
-      id: 1,
-      name: 'Diwali Nights',
-      date: 'Nov 15',
-      image: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd?crop=entropy&cs=srgb&fm=jpg&q=85'
-    },
-    {
-      id: 2,
-      name: 'Bollywood Bass Night',
-      date: 'Nov 22',
-      image: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475?crop=entropy&cs=srgb&fm=jpg&q=85'
-    }
-  ];
+  const removeFavorite = (eventId) => {
+    const favorites = JSON.parse(localStorage.getItem('soundwolves_favorite_events') || '[]');
+    const newFavorites = favorites.filter(id => id !== eventId);
+    localStorage.setItem('soundwolves_favorite_events', JSON.stringify(newFavorites));
+    setFavoriteEvents(prev => prev.filter(e => e.id !== eventId));
+    toast.info('Removed from favorites');
+  };
 
-  const followingDJs = [
-    {
-      id: 1,
-      name: 'DJ OM',
-      image: 'https://images.unsplash.com/photo-1764014482589-14845f224990?crop=entropy&cs=srgb&fm=jpg&q=85',
-      nextShow: 'Nov 15'
-    },
-    {
-      id: 2,
-      name: 'DJ Priya',
-      image: 'https://images.unsplash.com/photo-1654031424664-e0e6174fbd26?crop=entropy&cs=srgb&fm=jpg&q=85',
-      nextShow: 'Nov 22'
-    }
-  ];
+  const unfollowDJ = (djId) => {
+    const followed = JSON.parse(localStorage.getItem('soundwolves_followed_djs') || '[]');
+    const newFollowed = followed.filter(id => id !== djId);
+    localStorage.setItem('soundwolves_followed_djs', JSON.stringify(newFollowed));
+    setFollowingDJs(prev => prev.filter(d => d.id !== djId));
+    toast.info('Unfollowed DJ');
+  };
 
   const achievements = [
     { icon: Calendar, title: 'Party Animal', description: 'Attended 20+ events', unlocked: true },
@@ -59,6 +76,14 @@ export const Profile = () => {
     { icon: Crown, title: 'VIP Status', description: 'Gold member for 6 months', unlocked: true },
     { icon: Heart, title: 'Super Fan', description: 'Follow 10+ DJs', unlocked: false, progress: 80 }
   ];
+
+  if (!user) {
+    return (
+      <div className="min-h-screen pt-20 pb-24 md:pb-8 flex items-center justify-center">
+        <p className="text-muted-foreground">Loading profile...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-20 pb-24 md:pb-8">
@@ -73,7 +98,7 @@ export const Profile = () => {
               <Avatar className="w-32 h-32 ring-4 ring-background">
                 <AvatarImage src={user.avatar} />
                 <AvatarFallback className="text-2xl font-display">
-                  {user.name.split(' ').map(n => n[0]).join('')}
+                  {user.name?.split(' ').map(n => n[0]).join('')}
                 </AvatarFallback>
               </Avatar>
 
@@ -99,28 +124,33 @@ export const Profile = () => {
                       <span>Member since {user.memberSince}</span>
                     </div>
                   </div>
-                  <Button variant="outline" className="gap-2">
-                    <Edit2 className="w-4 h-4" />
-                    Edit Profile
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="gap-2">
+                      <Edit2 className="w-4 h-4" />
+                      Edit Profile
+                    </Button>
+                    <Button variant="ghost" className="gap-2 text-destructive hover:text-destructive" onClick={handleLogout}>
+                      <LogOut className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{user.stats.eventsAttended}</p>
+                    <p className="text-2xl font-bold text-primary">{user.stats?.eventsAttended || 0}</p>
                     <p className="text-xs text-muted-foreground">Events</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{user.stats.following}</p>
+                    <p className="text-2xl font-bold text-primary">{followingDJs.length}</p>
                     <p className="text-xs text-muted-foreground">Following</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{user.stats.referrals}</p>
-                    <p className="text-xs text-muted-foreground">Referrals</p>
+                    <p className="text-2xl font-bold text-primary">{favoriteEvents.length}</p>
+                    <p className="text-xs text-muted-foreground">Favorites</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-primary">{user.stats.points}</p>
+                    <p className="text-2xl font-bold text-primary">{user.stats?.points || 0}</p>
                     <p className="text-xs text-muted-foreground">Points</p>
                   </div>
                 </div>
@@ -130,9 +160,10 @@ export const Profile = () => {
         </Card>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="events">Events</TabsTrigger>
+            <TabsTrigger value="favorites">Favorites</TabsTrigger>
+            <TabsTrigger value="bookings">Bookings</TabsTrigger>
             <TabsTrigger value="following">Following</TabsTrigger>
             <TabsTrigger value="rewards">Rewards</TabsTrigger>
           </TabsList>
@@ -148,88 +179,221 @@ export const Profile = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {upcomingEvents.map((event) => (
-                  <div key={event.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
-                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                      <img src={event.image} alt={event.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{event.name}</h4>
-                      <p className="text-sm text-muted-foreground">{event.date}</p>
-                    </div>
-                    <Button variant="outline" size="sm">View</Button>
+                {bookingHistory.filter(b => b.status === 'upcoming').length === 0 ? (
+                  <div className="text-center py-8">
+                    <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-muted-foreground mb-4">No upcoming events</p>
+                    <Link to="/events">
+                      <Button variant="outline">Discover Events</Button>
+                    </Link>
                   </div>
-                ))}
+                ) : (
+                  bookingHistory.filter(b => b.status === 'upcoming').map((booking) => (
+                    <Link key={booking.eventId} to={`/event/${booking.eventId}`}>
+                      <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                          <img src={booking.event?.image} alt={booking.event?.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold truncate">{booking.event?.title}</h4>
+                          <p className="text-sm text-muted-foreground">{booking.event?.date}</p>
+                          <Badge variant="secondary" className="mt-1 text-xs">
+                            {booking.ticketType}
+                          </Badge>
+                        </div>
+                        <Button variant="outline" size="sm">View</Button>
+                      </div>
+                    </Link>
+                  ))
+                )}
               </CardContent>
             </Card>
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link to="/tickets">
+                <Card className="border-border/50 cursor-pointer hover-lift h-full">
+                  <CardContent className="p-6 text-center space-y-2">
+                    <Ticket className="w-8 h-8 text-primary mx-auto" />
+                    <h3 className="font-display font-bold">My Tickets</h3>
+                    <p className="text-sm text-muted-foreground">View and manage your tickets</p>
+                  </CardContent>
+                </Card>
+              </Link>
               <Card className="border-border/50 cursor-pointer hover-lift">
                 <CardContent className="p-6 text-center space-y-2">
-                  <Ticket className="w-8 h-8 text-primary mx-auto" />
-                  <h3 className="font-display font-bold">My Tickets</h3>
-                  <p className="text-sm text-muted-foreground">View and manage your tickets</p>
-                </CardContent>
-              </Card>
-              <Card className="border-border/50 cursor-pointer hover-lift">
-                <CardContent className="p-6 text-center space-y-2">
-                  <Settings className="w-8 h-8 text-primary mx-auto" />
-                  <h3 className="font-display font-bold">Settings</h3>
-                  <p className="text-sm text-muted-foreground">Manage your preferences</p>
+                  <Bell className="w-8 h-8 text-primary mx-auto" />
+                  <h3 className="font-display font-bold">Notifications</h3>
+                  <p className="text-sm text-muted-foreground">Manage event reminders</p>
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
-          {/* Events Tab */}
-          <TabsContent value="events" className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {upcomingEvents.map((event) => (
-                <Card key={event.id} className="overflow-hidden border-border/50 hover-lift cursor-pointer">
-                  <div className="h-40 overflow-hidden">
-                    <img src={event.image} alt={event.name} className="w-full h-full object-cover" />
+          {/* Favorites Tab */}
+          <TabsContent value="favorites" className="space-y-6">
+            <Card className="border-border/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-destructive" />
+                  Favorite Events
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {favoriteEvents.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Heart className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-muted-foreground mb-4">No favorite events yet</p>
+                    <Link to="/events">
+                      <Button variant="outline">Browse Events</Button>
+                    </Link>
                   </div>
-                  <CardContent className="p-4">
-                    <h3 className="font-display font-bold mb-1">{event.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-3">{event.date}</p>
-                    <Button variant="premium" size="sm" className="w-full">
-                      View Tickets
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {favoriteEvents.map((event) => (
+                      <Card key={event.id} className="overflow-hidden border-border/50 hover-lift">
+                        <Link to={`/event/${event.id}`}>
+                          <div className="h-32 overflow-hidden">
+                            <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                          </div>
+                        </Link>
+                        <CardContent className="p-4">
+                          <Link to={`/event/${event.id}`}>
+                            <h3 className="font-display font-bold mb-1 hover:text-primary transition-colors truncate">{event.title}</h3>
+                          </Link>
+                          <p className="text-sm text-muted-foreground mb-3">{event.date}</p>
+                          <div className="flex gap-2">
+                            <Link to={`/event/${event.id}`} className="flex-1">
+                              <Button variant="premium" size="sm" className="w-full">
+                                Get Tickets
+                              </Button>
+                            </Link>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => removeFavorite(event.id)}
+                            >
+                              <Heart className="w-4 h-4 fill-destructive text-destructive" />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Bookings Tab */}
+          <TabsContent value="bookings" className="space-y-6">
+            <Card className="border-border/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Ticket className="w-5 h-5 text-primary" />
+                  Booking History
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {bookingHistory.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Ticket className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-muted-foreground mb-4">No bookings yet</p>
+                    <Link to="/events">
+                      <Button variant="outline">Book Your First Event</Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {bookingHistory.map((booking) => (
+                      <div key={booking.eventId} className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 border border-border/50">
+                        <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                          <img src={booking.event?.image} alt={booking.event?.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold truncate">{booking.event?.title}</h4>
+                          <p className="text-sm text-muted-foreground">{booking.event?.venue} • {booking.event?.city}</p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <Badge variant={booking.status === 'upcoming' ? 'default' : 'secondary'}>
+                              {booking.status}
+                            </Badge>
+                            <Badge variant="outline">{booking.ticketType}</Badge>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-muted-foreground">Purchased</p>
+                          <p className="font-medium">{booking.purchaseDate}</p>
+                          <Link to={`/event/${booking.eventId}`}>
+                            <Button variant="outline" size="sm" className="mt-2">View Details</Button>
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Following Tab */}
           <TabsContent value="following" className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {followingDJs.map((dj) => (
-                <Card key={dj.id} className="border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <Avatar className="w-16 h-16 ring-2 ring-primary/30">
-                        <AvatarImage src={dj.image} />
-                        <AvatarFallback>{dj.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <h3 className="font-display font-bold">{dj.name}</h3>
-                        <p className="text-sm text-muted-foreground">Next show: {dj.nextShow}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="flex-1">
-                        View Profile
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        <Heart className="w-4 h-4 fill-destructive text-destructive" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <Card className="border-border/50">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-primary" />
+                  Following DJs ({followingDJs.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {followingDJs.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Users className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-muted-foreground mb-4">Not following any DJs yet</p>
+                    <Link to="/djs">
+                      <Button variant="outline">Discover DJs</Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {followingDJs.map((dj) => (
+                      <Card key={dj.id} className="border-border/50">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-4 mb-4">
+                            <Avatar className="w-16 h-16 ring-2 ring-primary/30">
+                              <AvatarImage src={dj.image} />
+                              <AvatarFallback>{dj.name?.[0]}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-display font-bold truncate">{dj.name}</h3>
+                              <p className="text-sm text-muted-foreground truncate">{dj.specialty}</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <Star className="w-3 h-3 text-primary fill-current" />
+                                <span className="text-xs">{dj.rating}</span>
+                                <span className="text-xs text-muted-foreground">• {dj.upcomingShows} shows</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Link to={`/dj/${dj.id}`} className="flex-1">
+                              <Button variant="outline" size="sm" className="w-full">
+                                View Profile
+                              </Button>
+                            </Link>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => unfollowDJ(dj.id)}
+                            >
+                              <Heart className="w-4 h-4 fill-destructive text-destructive" />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Rewards Tab */}
@@ -239,7 +403,7 @@ export const Profile = () => {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-2xl font-display font-bold mb-1">{user.stats.points} Points</h3>
+                    <h3 className="text-2xl font-display font-bold mb-1">{user.stats?.points || 0} Points</h3>
                     <p className="text-sm text-muted-foreground">760 points to next reward</p>
                   </div>
                   <Gift className="w-12 h-12 text-primary" />

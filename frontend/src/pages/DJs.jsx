@@ -9,6 +9,14 @@ export const DJs = () => {
   const [followedDJs, setFollowedDJs] = useState([]);
   const [allDJs, setAllDJs] = useState([]);
 
+  React.useEffect(() => {
+    // Load DJs from localStorage
+    const storedDJs = JSON.parse(localStorage.getItem('soundwolves_djs') || '[]');
+    // Filter to only show DJs with complete profiles
+    const completeDJs = storedDJs.filter(dj => dj.bio && dj.specialty);
+    setAllDJs([...djs, ...completeDJs]);
+  }, []);
+
   const toggleFollow = (djId) => {
     setFollowedDJs(prev => 
       prev.includes(djId) 

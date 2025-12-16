@@ -281,7 +281,8 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {topDJs.map((dj) => (
-              <Card key={dj.id} className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
+              <Link key={dj.id} to={`/dj/${dj.id}`}>
+                <Card className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
                 <div className="flex gap-5 p-5">
                   <div className="relative flex-shrink-0">
                     <div className="w-24 h-24 rounded-xl overflow-hidden ring-2 ring-primary/20 group-hover:ring-primary transition-all">

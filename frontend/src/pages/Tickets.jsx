@@ -77,10 +77,40 @@ export const Tickets = () => {
   ];
 
   const handleQuantityChange = (eventId, tierId, value) => {
+    const newQuantity = Math.max(0, (selectedTickets[`${eventId}-${tierId}`] || 0) + value);
     setSelectedTickets(prev => ({
       ...prev,
-      [`${eventId}-${tierId}`]: Math.max(0, (prev[`${eventId}-${tierId}`] || 0) + value)
+      [`${eventId}-${tierId}`]: newQuantity
     }));
+  };
+
+  const handleAddToCart = (event, tier, quantity) => {
+    if (quantity === 0) {
+      toast.error('Please select at least one ticket');
+      return;
+    }
+    
+    const cartItem = {
+      eventId: event.id,
+      eventName: event.eventName,
+      tierName: tier.name,
+      quantity: quantity,
+      price: tier.price,
+      total: tier.price * quantity
+    };
+    
+    setCart(prev => [...prev, cartItem]);
+    toast.success(`Added ${quantity} x ${tier.name} to cart!`);
+  };
+
+  const handleViewQR = (ticket) => {
+    toast.success('QR Code viewer would open here');
+    // In real app, would show QR code modal
+  };
+
+  const handleTransfer = (ticket) => {
+    toast.success('Transfer ticket feature coming soon!');
+    // In real app, would show transfer modal
   };
 
   return (

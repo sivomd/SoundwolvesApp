@@ -360,9 +360,9 @@ export const Home = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <img 
-              src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/qg39p13p_Stylized%20Wolf%20Emblem%20with%20Mandala%20Pattern.png" 
+              src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/tjj77kbh_SoundWolves.png" 
               alt="SoundWolves Logo"
-              className="w-20 h-20 mx-auto mb-6 object-contain animate-glow"
+              className="h-20 mx-auto mb-6 object-contain animate-glow"
             />
             <h2 className="text-4xl sm:text-5xl font-display font-bold mb-4">
               Join the <span className="text-gradient-gold">Wolves Pack</span>

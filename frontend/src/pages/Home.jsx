@@ -356,13 +356,17 @@ export const Home = () => {
               Unlock exclusive VIP experiences, early access to tickets, backstage passes, and connect with the hottest nightlife community
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="premium" size="lg">
-                <Crown className="w-5 h-5 mr-2" />
-                Get Wolves Pass
-              </Button>
-              <Button variant="outline" size="lg">
-                Learn More
-              </Button>
+              <Link to="/membership">
+                <Button variant="premium" size="lg">
+                  <Crown className="w-5 h-5 mr-2" />
+                  Get Wolves Pass
+                </Button>
+              </Link>
+              <Link to="/membership">
+                <Button variant="outline" size="lg">
+                  Learn More
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

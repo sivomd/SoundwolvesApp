@@ -29,12 +29,16 @@ export const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-2 group">
             <img 
               src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/tjj77kbh_SoundWolves.png" 
               alt="SoundWolves Logo"
               className="h-8 object-contain"
             />
+            <span className="font-display font-bold text-xl tracking-tight hidden sm:block">
+              <span className="text-foreground">SOUND</span>
+              <span className="text-gradient-gold">WOLVES</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

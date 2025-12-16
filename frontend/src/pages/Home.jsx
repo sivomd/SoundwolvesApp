@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
 export const Home = () => {
-  const [selectedCity, setSelectedCity] = useState('Toronto');
+  const [selectedCity, setSelectedCity] = useState('New York');
   const [searchQuery, setSearchQuery] = useState('');
 
   const cities = ['New York', 'New Jersey', 'Philadelphia', 'Newark', 'Jersey City', 'Brooklyn'];

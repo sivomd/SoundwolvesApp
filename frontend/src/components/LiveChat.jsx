@@ -45,7 +45,7 @@ export const LiveChat = () => {
       text: "We have 3 exclusive membership tiers:\n\n🐺 Wolves Pass ($29/mo)\n• Early ticket access (24h)\n• 10% discount on all tickets\n• Member-only events\n\n👑 Gold ($79/mo)\n• Everything in Wolves Pass\n• 48h early access\n• 20% discount\n• Backstage access\n\n💎 Black ($199/mo)\n• Everything in Gold\n• Unlimited early access\n• 30% discount\n• VIP table access\n• Dedicated concierge\n\nCheck out the 'Wolves Pass' page for more details!"
     },
     'where are events located': {
-      text: "We host events across:\n\n📍 New York (NYC, Brooklyn)\n📍 New Jersey (Newark, Jersey City)\n📍 Philadelphia\n\nAll major venues including:\n• Brooklyn Bowl\n• Sony Hall\n• The Fillmore Philadelphia\n• PRYSM Nightclub\n• And many more!\n\nUse the city filter on our Events page to find events near you!"
+      text: "We host events across:\n\n📍 New York (NYC, Brooklyn)\n📍 New Jersey (Newark, Jersey City)\n📍 Philadelphia\n\nAll major venues including:\n• Brooklyn Bowl\n• Sony Hall\n• The Fillmore Philadelphia\n• PRYSM Nightclub\n• Prudential Center\n• And many more!\n\nFeaturing top DJs:\n🎵 DJ OM (@the.dj.om)\n🎵 DJ KYA (@kyathedj)\n🎵 DJ PANDA (@sidequestpanda)\n\nUse the city filter on our Events page to find events near you!"
     },
     'default': {
       text: "I can help you with:\n\n• 🎤 DJ signup and profile creation\n• 🎫 Ticket purchasing\n• 👑 Membership information\n• 📍 Event locations\n• 🔐 Account setup\n\nWhat would you like to know more about?"

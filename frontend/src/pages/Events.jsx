@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Calendar, MapPin, Users, Star, Filter, Search, TrendingUp, Crown, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Calendar, MapPin, Users, Filter, Search, TrendingUp, Crown, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,255 +12,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { events, categories, cities } from '@/data/mockData';
+import { EventCountdown } from '@/components/EventCountdown';
+import { FriendsAttending } from '@/components/FriendsAttending';
 
 export const Events = () => {
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const events = [
-    // 2025 Events
-    {
-      id: 1,
-      title: 'Valentine\'s Bollywood Bash',
-      artist: 'DJ OM',
-      venue: 'Brooklyn Bowl',
-      city: 'New York',
-      date: 'Feb 14, 2025',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$85',
-      vipPrice: '$175',
-      tags: ['VIP Tables', 'Couples Special', 'Limited'],
-      attendees: 342,
-      trending: true,
-      category: 'bollywood'
-    },
-    {
-      id: 2,
-      title: 'Holi Color Festival 2025',
-      artist: 'DJ KYA',
-      venue: 'The Wellmont Theater',
-      city: 'New Jersey',
-      date: 'Mar 14, 2025',
-      time: '6:00 PM',
-      image: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$65',
-      vipPrice: '$140',
-      tags: ['Festival', 'All Ages', 'Food'],
-      attendees: 589,
-      trending: true,
-      category: 'special'
-    },
-    {
-      id: 3,
-      title: 'Spring Punjabi Night',
-      artist: 'DJ PANDA',
-      venue: 'Liberty Hall',
-      city: 'Jersey City',
-      date: 'Apr 19, 2025',
-      time: '10:00 PM',
-      image: 'https://images.unsplash.com/photo-1763630054569-0e012e52616d?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$55',
-      vipPrice: '$125',
-      tags: ['Backstage Pass', 'VIP Bar'],
-      attendees: 367,
-      trending: false,
-      category: 'punjabi'
-    },
-    {
-      id: 4,
-      title: 'Memorial Day Weekend Bash',
-      artist: 'DJ OM & DJ KYA',
-      venue: 'Sony Hall',
-      city: 'New York',
-      date: 'May 24, 2025',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1643981693404-d76e58594bbf?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$80',
-      vipPrice: '$165',
-      tags: ['Live Performance', 'VIP Tables'],
-      attendees: 478,
-      trending: true,
-      category: 'bollywood'
-    },
-    {
-      id: 5,
-      title: 'Summer Punjabi Nights',
-      artist: 'DJ PANDA',
-      venue: 'Sony Hall',
-      city: 'New York',
-      date: 'Jun 21, 2025',
-      time: '10:00 PM',
-      image: 'https://images.unsplash.com/photo-7715528/pexels-photo-7715528.jpeg',
-      price: '$55',
-      vipPrice: '$130',
-      tags: ['EDM', 'Open Bar'],
-      attendees: 423,
-      trending: true,
-      category: 'punjabi'
-    },
-    {
-      id: 6,
-      title: 'Independence Day Desi Party',
-      artist: 'DJ OM & DJ KYA',
-      venue: 'The Fillmore Philadelphia',
-      city: 'Philadelphia',
-      date: 'Jul 4, 2025',
-      time: '8:00 PM',
-      image: 'https://images.unsplash.com/photo-1454321717968-d243ade71663?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$75',
-      vipPrice: '$160',
-      tags: ['Festival', 'Food Trucks', 'All Ages'],
-      attendees: 512,
-      trending: false,
-      category: 'special'
-    },
-    {
-      id: 7,
-      title: 'Bollywood vs EDM Night',
-      artist: 'DJ PANDA',
-      venue: 'PRYSM Nightclub',
-      city: 'Newark',
-      date: 'Aug 15, 2025',
-      time: '11:00 PM',
-      image: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$60',
-      vipPrice: '$135',
-      tags: ['EDM', 'VIP Tables'],
-      attendees: 398,
-      trending: false,
-      category: 'edm'
-    },
-    {
-      id: 8,
-      title: 'Labor Day Weekend Celebration',
-      artist: 'DJ OM',
-      venue: 'Brooklyn Bowl',
-      city: 'New York',
-      date: 'Aug 30, 2025',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1643981693404-d76e58594bbf?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$70',
-      vipPrice: '$150',
-      tags: ['VIP Tables', 'After Party'],
-      attendees: 445,
-      trending: true,
-      category: 'bollywood'
-    },
-    {
-      id: 9,
-      title: 'Navratri Garba Nights',
-      artist: 'DJ PANDA',
-      venue: 'Prudential Center',
-      city: 'Newark',
-      date: 'Oct 3, 2025',
-      time: '7:00 PM',
-      image: 'https://images.unsplash.com/photo-7715528/pexels-photo-7715528.jpeg',
-      price: '$50',
-      vipPrice: '$115',
-      tags: ['Traditional', 'All Ages', 'Food'],
-      attendees: 782,
-      trending: true,
-      category: 'special'
-    },
-    {
-      id: 10,
-      title: 'Diwali Spectacular 2025',
-      artist: 'DJ OM',
-      venue: 'Brooklyn Bowl',
-      city: 'New York',
-      date: 'Nov 1, 2025',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1454321717968-d243ade71663?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$90',
-      vipPrice: '$185',
-      tags: ['VIP Tables', 'After Party', 'Exclusive'],
-      attendees: 634,
-      trending: true,
-      category: 'bollywood'
-    },
-    {
-      id: 11,
-      title: 'Thanksgiving Bhangra Bash',
-      artist: 'DJ KYA',
-      venue: 'The Fillmore Philadelphia',
-      city: 'Philadelphia',
-      date: 'Nov 27, 2025',
-      time: '10:00 PM',
-      image: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$65',
-      vipPrice: '$140',
-      tags: ['Bhangra', 'VIP Bar'],
-      attendees: 523,
-      trending: false,
-      category: 'punjabi'
-    },
-    {
-      id: 12,
-      title: 'New Year Eve Bash 2026',
-      artist: 'DJ OM, DJ KYA & DJ PANDA',
-      venue: 'Prudential Center',
-      city: 'Newark',
-      date: 'Dec 31, 2025',
-      time: '8:00 PM',
-      image: 'https://images.unsplash.com/photo-1763630054569-0e012e52616d?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$200',
-      vipPrice: '$450',
-      tags: ['VIP Tables', 'Champagne', 'Exclusive', 'Limited'],
-      attendees: 892,
-      trending: true,
-      category: 'special'
-    },
-    // 2026 Events
-    {
-      id: 13,
-      title: 'Winter Bollywood Night',
-      artist: 'DJ OM',
-      venue: 'Sony Hall',
-      city: 'New York',
-      date: 'Jan 24, 2026',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1744313930610-1649242d1fcd?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$75',
-      vipPrice: '$155',
-      tags: ['VIP Tables', 'Open Bar'],
-      attendees: 412,
-      trending: false,
-      category: 'bollywood'
-    },
-    {
-      id: 14,
-      title: 'Valentine\'s Love Festival 2026',
-      artist: 'DJ KYA',
-      venue: 'Brooklyn Bowl',
-      city: 'New York',
-      date: 'Feb 14, 2026',
-      time: '9:00 PM',
-      image: 'https://images.unsplash.com/photo-1744314080490-ed41f6319475?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$90',
-      vipPrice: '$180',
-      tags: ['Couples Special', 'VIP Tables', 'Romantic'],
-      attendees: 356,
-      trending: false,
-      category: 'special'
-    },
-    {
-      id: 15,
-      title: 'Holi Mega Festival 2026',
-      artist: 'DJ PANDA',
-      venue: 'Prudential Center',
-      city: 'Newark',
-      date: 'Mar 6, 2026',
-      time: '6:00 PM',
-      image: 'https://images.unsplash.com/photo-1643981693404-d76e58594bbf?crop=entropy&cs=srgb&fm=jpg&q=85',
-      price: '$70',
-      vipPrice: '$145',
-      tags: ['Festival', 'All Ages', 'Food', 'Colors'],
-      attendees: 723,
-      trending: false,
-      category: 'special'
-    }
-  ];
+  const [searchParams] = useSearchParams();
+  const [selectedFilter, setSelectedFilter] = useState(searchParams.get('filter') || 'all');
+  const [selectedCity, setSelectedCity] = useState('all');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [priceFilter, setPriceFilter] = useState('all');
 
   // Filter and search logic
   const filteredEvents = events.filter(event => {
@@ -272,12 +33,26 @@ export const Events = () => {
       event.city.toLowerCase().includes(searchQuery.toLowerCase());
 
     // Category filter
-    const matchesFilter = selectedFilter === 'all' || 
+    const matchesCategory = selectedFilter === 'all' || 
       (selectedFilter === 'trending' && event.trending) ||
       event.category === selectedFilter;
 
-    return matchesSearch && matchesFilter;
+    // City filter
+    const matchesCity = selectedCity === 'all' || event.city === selectedCity;
+
+    // Price filter
+    let matchesPrice = true;
+    if (priceFilter === 'under50') matchesPrice = event.priceNum < 50;
+    else if (priceFilter === '50to100') matchesPrice = event.priceNum >= 50 && event.priceNum <= 100;
+    else if (priceFilter === 'over100') matchesPrice = event.priceNum > 100;
+
+    return matchesSearch && matchesCategory && matchesCity && matchesPrice;
   });
+
+  // Sort by date (upcoming first)
+  const sortedEvents = [...filteredEvents].sort((a, b) => 
+    new Date(a.dateISO) - new Date(b.dateISO)
+  );
 
   return (
     <div className="min-h-screen pt-20 pb-24 md:pb-8">
@@ -308,124 +83,196 @@ export const Events = () => {
             <Select value={selectedFilter} onValueChange={setSelectedFilter}>
               <SelectTrigger className="w-full sm:w-48">
                 <Filter className="w-4 h-4 mr-2" />
-                <SelectValue placeholder="Filter" />
+                <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Events</SelectItem>
-                <SelectItem value="trending">Trending</SelectItem>
-                <SelectItem value="bollywood">Bollywood</SelectItem>
-                <SelectItem value="punjabi">Punjabi</SelectItem>
-                <SelectItem value="edm">EDM</SelectItem>
-                <SelectItem value="special">Special Events</SelectItem>
+                {categories.map((cat) => (
+                  <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-wrap gap-4">
+            <Select value={selectedCity} onValueChange={setSelectedCity}>
+              <SelectTrigger className="w-full sm:w-44">
+                <MapPin className="w-4 h-4 mr-2" />
+                <SelectValue placeholder="City" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Cities</SelectItem>
+                {cities.map((city) => (
+                  <SelectItem key={city} value={city}>{city}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={priceFilter} onValueChange={setPriceFilter}>
+              <SelectTrigger className="w-full sm:w-40">
+                <SelectValue placeholder="Price" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Prices</SelectItem>
+                <SelectItem value="under50">Under $50</SelectItem>
+                <SelectItem value="50to100">$50 - $100</SelectItem>
+                <SelectItem value="over100">Over $100</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           {/* Quick Filters */}
           <div className="flex flex-wrap gap-2">
-            <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
-              This Weekend
+            <Badge 
+              variant={selectedFilter === 'trending' ? 'default' : 'outline'} 
+              className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+              onClick={() => setSelectedFilter(selectedFilter === 'trending' ? 'all' : 'trending')}
+            >
+              <TrendingUp className="w-3 h-3 mr-1" />
+              Trending
             </Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
-              VIP Available
-            </Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
+            <Badge 
+              variant="outline" 
+              className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+              onClick={() => setPriceFilter(priceFilter === 'under50' ? 'all' : 'under50')}
+            >
               Under $50
             </Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
-              Near Me
+            <Badge 
+              variant="outline" 
+              className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+              onClick={() => setSelectedFilter(selectedFilter === 'special' ? 'all' : 'special')}
+            >
+              Special Events
             </Badge>
           </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-sm text-muted-foreground">
+            Showing {sortedEvents.length} event{sortedEvents.length !== 1 ? 's' : ''}
+          </p>
         </div>
 
         {/* Events Grid */}
-        {filteredEvents.length === 0 ? (
+        {sortedEvents.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-xl text-muted-foreground mb-4">No events found</p>
-            <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
+            <p className="text-sm text-muted-foreground mb-6">Try adjusting your search or filters</p>
+            <Button variant="outline" onClick={() => {
+              setSearchQuery('');
+              setSelectedFilter('all');
+              setSelectedCity('all');
+              setPriceFilter('all');
+            }}>
+              Clear Filters
+            </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEvents.map((event) => (
+            {sortedEvents.map((event) => (
               <Link key={event.id} to={`/event/${event.id}`}>
-                <Card className="group overflow-hidden border-border/50 hover-lift cursor-pointer">
-              {/* Event Image */}
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                
-                {/* Badges */}
-                <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-                  {event.trending && (
-                    <Badge className="bg-destructive/90 text-white backdrop-blur-sm">
-                      <TrendingUp className="w-3 h-3 mr-1" />
-                      Trending
-                    </Badge>
-                  )}
-                  {event.tags.slice(0, 1).map((tag) => (
-                    <Badge key={tag} className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
-                      <Crown className="w-3 h-3 mr-1" />
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
+                <Card className="group overflow-hidden border-border/50 hover-lift cursor-pointer h-full">
+                  {/* Event Image */}
+                  <div className="relative h-56 overflow-hidden">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                    
+                    {/* Badges */}
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                      {event.trending && (
+                        <Badge className="bg-destructive/90 text-white backdrop-blur-sm">
+                          <TrendingUp className="w-3 h-3 mr-1" />
+                          Trending
+                        </Badge>
+                      )}
+                      {event.tags.slice(0, 1).map((tag) => (
+                        <Badge key={tag} className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
+                          <Crown className="w-3 h-3 mr-1" />
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
 
-                {/* Attendees */}
-                <div className="absolute bottom-3 right-3 flex items-center gap-2 glass-card px-3 py-1.5 rounded-full">
-                  <Users className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium">{event.attendees}</span>
-                </div>
-              </div>
+                    {/* Capacity indicator */}
+                    <div className="absolute top-3 right-3">
+                      <Badge 
+                        variant="outline" 
+                        className={`backdrop-blur-sm ${
+                          (event.attendees / event.capacity) > 0.8 
+                            ? 'bg-destructive/20 text-destructive border-destructive/30' 
+                            : 'bg-background/50'
+                        }`}
+                      >
+                        {Math.round((event.attendees / event.capacity) * 100)}% Full
+                      </Badge>
+                    </div>
 
-              <CardContent className="p-5 space-y-3">
-                <div>
-                  <h3 className="text-xl font-display font-bold mb-1 group-hover:text-primary transition-colors">
-                    {event.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">{event.artist}</p>
-                </div>
+                    {/* Friends Attending */}
+                    <div className="absolute bottom-3 left-3">
+                      <FriendsAttending friendsAttending={event.friendsAttending} compact />
+                    </div>
 
-                <div className="flex items-center gap-2 text-sm">
-                  <MapPin className="w-4 h-4 text-muted-foreground" />
-                  <span>{event.venue} • {event.city}</span>
-                </div>
-
-                <div className="flex items-center gap-2 text-sm">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  <span>{event.date}</span>
-                </div>
-
-                <div className="flex items-center gap-2 text-sm">
-                  <Clock className="w-4 h-4 text-muted-foreground" />
-                  <span>{event.time}</span>
-                </div>
-
-                <div className="pt-3 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-muted-foreground">From</p>
-                    <p className="text-2xl font-bold text-primary">{event.price}</p>
+                    {/* Attendees */}
+                    <div className="absolute bottom-3 right-3 flex items-center gap-2 glass-card px-3 py-1.5 rounded-full">
+                      <Users className="w-4 h-4 text-primary" />
+                      <span className="text-sm font-medium">{event.attendees}</span>
+                    </div>
                   </div>
-                  <Button 
-                    variant="premium" 
-                    size="sm"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      window.location.href = `/event/${event.id}`;
-                    }}
-                  >
-                    Get Tickets
-                  </Button>
-                </div>
-              </CardContent>
+
+                  <CardContent className="p-5 space-y-3">
+                    <div>
+                      <h3 className="text-xl font-display font-bold mb-1 group-hover:text-primary transition-colors line-clamp-1">
+                        {event.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm">{event.artist}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-sm">
+                      <MapPin className="w-4 h-4 text-muted-foreground" />
+                      <span className="truncate">{event.venue} • {event.city}</span>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <span>{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-muted-foreground" />
+                        <span>{event.time}</span>
+                      </div>
+                    </div>
+
+                    {/* Countdown */}
+                    <EventCountdown dateISO={event.dateISO} eventTitle={event.title} compact />
+
+                    <div className="pt-3 flex items-center justify-between border-t border-border/50">
+                      <div>
+                        <p className="text-xs text-muted-foreground">From</p>
+                        <p className="text-2xl font-bold text-primary">{event.price}</p>
+                      </div>
+                      <Button 
+                        variant="premium" 
+                        size="sm"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.location.href = `/event/${event.id}`;
+                        }}
+                      >
+                        Get Tickets
+                      </Button>
+                    </div>
+                  </CardContent>
                 </Card>
               </Link>
-          ))}
-        </div>
+            ))}
+          </div>
         )}
       </div>
     </div>

@@ -63,12 +63,40 @@ export const Navbar = () => {
 
           {/* User Actions */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="ghost" size="icon">
-              <User className="w-5 h-5" />
-            </Button>
-            <Button variant="premium" size="sm">
-              Get VIP Access
-            </Button>
+            {currentUser ? (
+              <>
+                <Link to={currentUser.type === 'dj' ? '/dj-dashboard' : '/profile'}>
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    {currentUser.djName || currentUser.name}
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => {
+                    localStorage.removeItem('soundwolves_current_user');
+                    setCurrentUser(null);
+                    window.location.href = '/';
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/membership">
+                  <Button variant="premium" size="sm">
+                    Get VIP Access
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}

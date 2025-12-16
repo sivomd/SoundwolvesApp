@@ -234,10 +234,21 @@ export const DJs = () => {
                         <p className="text-lg font-bold text-primary">{dj.priceRange}</p>
                       </div>
                       <div className="flex gap-2 w-full sm:w-auto">
-                        <Button variant="outline" className="flex-1 sm:flex-none">
+                        <Button 
+                          variant="outline" 
+                          className="flex-1 sm:flex-none"
+                          onClick={() => navigate(`/dj/${dj.id}`)}
+                        >
                           View Profile
                         </Button>
-                        <Button variant="premium" className="flex-1 sm:flex-none">
+                        <Button 
+                          variant="premium" 
+                          className="flex-1 sm:flex-none"
+                          onClick={() => {
+                            navigate(`/dj/${dj.id}`);
+                            toast.success('Redirecting to booking page...');
+                          }}
+                        >
                           <Crown className="w-4 h-4 mr-2" />
                           Book Now
                         </Button>

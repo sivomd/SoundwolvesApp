@@ -223,6 +223,6 @@ test_plan:
 
 agent_communication:
     - agent: "testing"
-      message: "Starting comprehensive testing of SOUNDWOLVES platform. Will test all navigation, page functionality, and UI/UX elements as requested. Frontend URL: https://dj-wolves-app.preview.emergentagent.com"
+      message: "Starting comprehensive testing of SOUNDWOLVES platform. Will test all navigation, page functionality, and UI/UX elements as requested. Frontend URL: https://sound-stage-6.preview.emergentagent.com"
     - agent: "testing"
       message: "✅ COMPREHENSIVE TESTING COMPLETED SUCCESSFULLY! All requested features tested and working. Navigation (desktop & mobile), all page functionality (Home, Events, DJs, Tickets, Membership), and UI/UX elements (gradients, glass-morphism, hover effects, button variants) are functioning excellently. The SOUNDWOLVES platform is a premium nightlife application with beautiful design and solid functionality. Only minor issues found (filter dropdown overlay) but core functionality is perfect."

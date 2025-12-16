@@ -249,7 +249,14 @@ export const Home = () => {
                       <p className="text-xs text-muted-foreground">From</p>
                       <p className="text-2xl font-bold text-primary">{event.price}</p>
                     </div>
-                    <Button variant="premium" size="sm" onClick={(e) => e.stopPropagation()}>
+                    <Button 
+                      variant="premium" 
+                      size="sm" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = `/event/${event.id}`;
+                      }}
+                    >
                       Get Tickets
                     </Button>
                   </div>

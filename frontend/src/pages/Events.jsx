@@ -269,6 +269,7 @@ export const Events = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      window.location.href = `/event/${event.id}`;
                     }}
                   >
                     Get Tickets

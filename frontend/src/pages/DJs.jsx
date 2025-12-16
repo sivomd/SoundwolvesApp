@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const DJs = () => {
   const [followedDJs, setFollowedDJs] = useState([]);
+  const [allDJs, setAllDJs] = useState([]);
 
   const toggleFollow = (djId) => {
     setFollowedDJs(prev => 

@@ -20,12 +20,14 @@ export const DJs = () => {
     setAllDJs([...djs, ...completeDJs]);
   }, []);
 
-  const toggleFollow = (djId) => {
+  const toggleFollow = (djId, djName) => {
+    const isFollowing = followedDJs.includes(djId);
     setFollowedDJs(prev => 
       prev.includes(djId) 
         ? prev.filter(id => id !== djId)
         : [...prev, djId]
     );
+    toast.success(isFollowing ? `Unfollowed ${djName}` : `Following ${djName}!`);
   };
 
   const djs = [

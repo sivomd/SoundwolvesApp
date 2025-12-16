@@ -167,15 +167,18 @@ frontend:
 
   - task: "Tickets Page Functionality"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/pages/Tickets.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Need to test tab switching (Upcoming/Browse Events), ticket cards display correctly, quantity selectors for ticket tiers, and Add to Cart functionality"
+        - working: true
+          agent: "testing"
+          comment: "✅ Tickets page functionality working well. 'My Tickets' title displays correctly. Tab switching between 'Upcoming' and 'Browse Events' works perfectly. Ticket cards display correctly with event details, pricing tiers (General Admission $150, VIP Experience $250, Platinum Table $350). Quantity selectors (+ and - buttons) functional - found 3 of each. Ticket tiers show proper perks and features. Minor: 'Add to Cart' buttons show as disabled until quantity selected, which is correct behavior."
 
   - task: "Membership Page Features"
     implemented: true

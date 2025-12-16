@@ -95,7 +95,7 @@ export const Home = () => {
             className="w-full h-full object-cover"
             poster="https://images.unsplash.com/photo-1764510383709-14be6ec28548"
           >
-            <source src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/o4oqtw3l_SoundWolves.mp4" type="video/mp4" />
+            <source src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/bfu02llz_SoundWolves%20%281%29.mp4" type="video/mp4" />
             {/* Fallback to image if video doesn't load */}
             <img
               src="https://images.unsplash.com/photo-1764510383709-14be6ec28548"

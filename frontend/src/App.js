@@ -15,6 +15,8 @@ import DJProfileSetup from '@/pages/DJProfileSetup';
 import DJDashboard from '@/pages/DJDashboard';
 import EventDetail from '@/pages/EventDetail';
 import DJDetail from '@/pages/DJDetail';
+import CyberSocial from '@/pages/CyberSocial';
+import CyberEventDetail from '@/pages/CyberEventDetail';
 import '@/App.css';
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
             <Route path="/dj-dashboard" element={<DJDashboard />} />
             <Route path="/event/:id" element={<EventDetail />} />
             <Route path="/dj/:id" element={<DJDetail />} />
+            <Route path="/cyber-social" element={<CyberSocial />} />
+            <Route path="/cyber-social/event/:id" element={<CyberEventDetail />} />
           </Routes>
         </main>
         <BottomNav />

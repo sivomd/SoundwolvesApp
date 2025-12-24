@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown } from 'lucide-react';
+import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +20,7 @@ export const Navbar = () => {
     { path: '/', label: 'Discover', icon: Zap },
     { path: '/events', label: 'Events', icon: Calendar },
     { path: '/djs', label: 'DJs', icon: Users },
+    { path: '/cyber-social', label: 'Cyber Social', icon: Shield, highlight: true },
     { path: '/tickets', label: 'Tickets', icon: Ticket },
     { path: '/membership', label: 'Wolves Pass', icon: Crown }
   ];
@@ -45,7 +46,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+              const isActive = location.pathname === item.path || (item.path === '/cyber-social' && location.pathname.startsWith('/cyber-social'));
               return (
                 <Link key={item.path} to={item.path}>
                   <Button
@@ -53,10 +54,11 @@ export const Navbar = () => {
                     size="sm"
                     className={cn(
                       'flex items-center gap-2',
-                      isActive && 'shadow-glow'
+                      isActive && 'shadow-glow',
+                      item.highlight && !isActive && 'text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10'
                     )}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className={cn('w-4 h-4', item.highlight && !isActive && 'text-cyan-400')} />
                     {item.label}
                   </Button>
                 </Link>
@@ -116,7 +118,7 @@ export const Navbar = () => {
           <div className="md:hidden py-4 space-y-2 animate-fade-in">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+              const isActive = location.pathname === item.path || (item.path === '/cyber-social' && location.pathname.startsWith('/cyber-social'));
               return (
                 <Link
                   key={item.path}
@@ -126,10 +128,12 @@ export const Navbar = () => {
                     'flex items-center gap-3 px-4 py-3 rounded-lg transition-all',
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-glow'
-                      : 'text-foreground hover:bg-muted'
+                      : item.highlight 
+                        ? 'text-cyan-400 hover:bg-cyan-400/10'
+                        : 'text-foreground hover:bg-muted'
                   )}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className={cn('w-5 h-5', item.highlight && !isActive && 'text-cyan-400')} />
                   <span className="font-medium">{item.label}</span>
                 </Link>
               );

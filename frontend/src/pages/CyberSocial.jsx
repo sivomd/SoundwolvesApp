@@ -48,8 +48,12 @@ export const CyberSocial = () => {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
-          {/* Trust Badge */}
-          <div className="flex justify-center mb-6">
+          {/* 2026 Announcement Badge */}
+          <div className="flex justify-center gap-3 mb-6">
+            <Badge className="bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-400 border-orange-500/30 backdrop-blur-sm px-4 py-2 text-sm animate-pulse">
+              <Calendar className="w-4 h-4 mr-2" />
+              2026 Season • Pre-Orders Now Open
+            </Badge>
             <Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 backdrop-blur-sm px-4 py-2 text-sm">
               <Shield className="w-4 h-4 mr-2" />
               New Jersey's Premier Cyber Leadership Network
@@ -65,17 +69,17 @@ export const CyberSocial = () => {
           </h1>
 
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Exclusive gatherings where vision, strategy, and influence are built outside the boardroom. 
+            <span className="text-cyan-400 font-semibold">Coming 2026:</span> Exclusive gatherings where vision, strategy, and influence are built outside the boardroom. 
             Fine dining, curated lounges, and invite-only conversations shaping the future of cybersecurity.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg shadow-cyan-500/25">
-              <Eye className="w-5 h-5 mr-2" />
-              Explore Upcoming Events
+              <Ticket className="w-5 h-5 mr-2" />
+              Pre-Order Early Bird Tickets
             </Button>
             <Button size="lg" variant="outline" className="border-gray-600 text-gray-300 hover:bg-white/10 hover:border-gray-500">
-              Request Invitation
+              Register Interest
             </Button>
           </div>
 

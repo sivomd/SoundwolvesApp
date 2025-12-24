@@ -46,7 +46,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+              const isActive = location.pathname === item.path || (item.path === '/cyber-social' && location.pathname.startsWith('/cyber-social'));
               return (
                 <Link key={item.path} to={item.path}>
                   <Button
@@ -54,10 +54,11 @@ export const Navbar = () => {
                     size="sm"
                     className={cn(
                       'flex items-center gap-2',
-                      isActive && 'shadow-glow'
+                      isActive && 'shadow-glow',
+                      item.highlight && !isActive && 'text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10'
                     )}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className={cn('w-4 h-4', item.highlight && !isActive && 'text-cyan-400')} />
                     {item.label}
                   </Button>
                 </Link>

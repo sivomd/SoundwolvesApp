@@ -87,11 +87,26 @@ export const CyberSocial = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg shadow-cyan-500/25">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg shadow-cyan-500/25"
+              onClick={() => {
+                document.getElementById('events-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               <Ticket className="w-5 h-5 mr-2" />
               Pre-Order Early Bird Tickets
             </Button>
-            <Button size="lg" variant="outline" className="border-gray-600 text-gray-300 hover:bg-white/10 hover:border-gray-500">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-gray-600 text-gray-300 hover:bg-white/10 hover:border-gray-500"
+              onClick={() => {
+                toast.success('Interest Registered!', {
+                  description: 'We\'ll notify you when new events are announced.'
+                });
+              }}
+            >
               Register Interest
             </Button>
           </div>

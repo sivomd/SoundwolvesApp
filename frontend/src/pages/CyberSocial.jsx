@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Lock, Users, Flame, Building, Music, Utensils, MapPin, Calendar, Clock, Crown, ArrowRight, Star, Sparkles, Eye, ChevronRight } from 'lucide-react';
+import { Shield, Lock, Users, Flame, Building, Music, Utensils, MapPin, Calendar, Clock, Crown, ArrowRight, Star, Sparkles, Eye, ChevronRight, Ticket, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';

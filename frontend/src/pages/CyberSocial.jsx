@@ -16,6 +16,7 @@ const iconMap = {
 };
 
 export const CyberSocial = () => {
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
 
@@ -27,6 +28,17 @@ export const CyberSocial = () => {
   const featuredEvents = getFeaturedCyberEvents();
   const trendingEvents = getTrendingCyberEvents();
   const featuredVenues = getFeaturedVenues();
+
+  const handleVIPAccess = () => {
+    toast.success('VIP Access Request', {
+      description: 'Redirecting to membership page to explore VIP options...'
+    });
+    navigate('/membership');
+  };
+
+  const handleLearnMembership = () => {
+    navigate('/membership');
+  };
 
   return (
     <div className="min-h-screen bg-background">

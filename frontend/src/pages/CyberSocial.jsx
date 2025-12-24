@@ -259,11 +259,20 @@ export const CyberSocial = () => {
               Request your invitation and become part of New Jersey's cyber elite.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg shadow-cyan-500/25">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg shadow-cyan-500/25"
+                onClick={handleVIPAccess}
+              >
                 <Crown className="w-5 h-5 mr-2" />
                 Request VIP Access
               </Button>
-              <Button size="lg" variant="outline" className="border-gray-600 text-gray-300 hover:bg-white/10">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-gray-600 text-gray-300 hover:bg-white/10"
+                onClick={handleLearnMembership}
+              >
                 Learn About Membership
               </Button>
             </div>

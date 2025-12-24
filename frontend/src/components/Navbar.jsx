@@ -118,7 +118,7 @@ export const Navbar = () => {
           <div className="md:hidden py-4 space-y-2 animate-fade-in">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+              const isActive = location.pathname === item.path || (item.path === '/cyber-social' && location.pathname.startsWith('/cyber-social'));
               return (
                 <Link
                   key={item.path}
@@ -128,10 +128,12 @@ export const Navbar = () => {
                     'flex items-center gap-3 px-4 py-3 rounded-lg transition-all',
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-glow'
-                      : 'text-foreground hover:bg-muted'
+                      : item.highlight 
+                        ? 'text-cyan-400 hover:bg-cyan-400/10'
+                        : 'text-foreground hover:bg-muted'
                   )}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className={cn('w-5 h-5', item.highlight && !isActive && 'text-cyan-400')} />
                   <span className="font-medium">{item.label}</span>
                 </Link>
               );

@@ -120,18 +120,24 @@ export const CyberSocial = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <Badge className="bg-red-500/20 text-red-400 border-red-500/30 mb-3">
-                <Flame className="w-3 h-3 mr-1" />
-                Trending Now
-              </Badge>
+              <div className="flex gap-2 mb-3">
+                <Badge className="bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-400 border-orange-500/30">
+                  <Tag className="w-3 h-3 mr-1" />
+                  Early Bird Pricing
+                </Badge>
+                <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                  <Flame className="w-3 h-3 mr-1" />
+                  High Demand
+                </Badge>
+              </div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold text-white">
-                Most Anticipated Gatherings
+                2026 Event Schedule
               </h2>
-              <p className="text-gray-400 mt-2">The events everyone's talking about</p>
+              <p className="text-gray-400 mt-2">Pre-order now and secure early bird pricing</p>
             </div>
             <Link to="/cyber-social/events">
               <Button variant="ghost" className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10">
-                View All
+                View All Events
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>

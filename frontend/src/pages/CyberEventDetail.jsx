@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Users, Lock, Crown, Share2, Heart, ArrowLeft, Check, Music, Utensils, Flame, ExternalLink, Shield } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Lock, Crown, Share2, Heart, ArrowLeft, Check, Music, Utensils, Flame, ExternalLink, Shield, Tag, Ticket, Mail, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { getCyberEventById } from '@/data/cyberEventsData';
+import { getCyberEventById, getEventStatusDisplay } from '@/data/cyberEventsData';
 
 export const CyberEventDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
   const [isInterested, setIsInterested] = useState(false);
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    title: ''
+  });
 
   useEffect(() => {
     const foundEvent = getCyberEventById(id);
@@ -24,16 +33,40 @@ export const CyberEventDetail = () => {
     }
   }, [id, navigate]);
 
-  const handleRSVP = () => {
+  const handlePreOrder = () => {
+    setShowRegistration(true);
+  };
+
+  const handleSubmitRegistration = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) {
+      toast.error('Please fill in required fields');
+      return;
+    }
+
+    // Store registration
+    const registrations = JSON.parse(localStorage.getItem('cyber_registrations') || '[]');
+    registrations.push({
+      eventId: event.id,
+      eventTitle: event.title,
+      ...formData,
+      type: event.inviteOnly ? 'pre-order-request' : 'pre-order',
+      timestamp: new Date().toISOString(),
+      price: event.earlyBirdPrice
+    });
+    localStorage.setItem('cyber_registrations', JSON.stringify(registrations));
+
     if (event.inviteOnly) {
-      toast.info('Invitation Request Sent', {
-        description: 'Our team will review your request and respond within 48 hours.'
+      toast.success('Pre-Order Request Submitted!', {
+        description: 'Our team will review your request and contact you within 48 hours.'
       });
     } else {
-      toast.success('RSVP Confirmed!', {
-        description: 'Check your email for confirmation and event details.'
+      toast.success('Pre-Order Confirmed!', {
+        description: `Your spot is secured at ${event.earlyBirdPrice}. Full payment due by ${event.earlyBirdDeadline}.`
       });
     }
+    setShowRegistration(false);
+    setFormData({ name: '', email: '', company: '', title: '' });
   };
 
   const handleShare = () => {
@@ -43,7 +76,7 @@ export const CyberEventDetail = () => {
 
   const toggleInterest = () => {
     setIsInterested(!isInterested);
-    toast.success(isInterested ? 'Removed from interested' : 'Marked as interested');
+    toast.success(isInterested ? 'Removed from interested' : 'Added to your interest list');
   };
 
   if (!event) {
@@ -54,7 +87,9 @@ export const CyberEventDetail = () => {
     );
   }
 
-  const capacityPercentage = Math.round((event.attendees / event.attendeeLimit) * 100);
+  const statusDisplay = getEventStatusDisplay(event);
+  const spotsRemaining = event.attendeeLimit - event.preOrders;
+  const preOrderPercentage = Math.round((event.preOrders / event.attendeeLimit) * 100);
 
   return (
     <div className="min-h-screen bg-gray-950 pt-20 pb-24">
@@ -111,6 +146,10 @@ export const CyberEventDetail = () => {
               Invite Only
             </Badge>
           )}
+          <Badge className="bg-cyan-500/90 text-white border-none">
+            <Calendar className="w-3 h-3 mr-1" />
+            2026 Event
+          </Badge>
         </div>
       </div>
 
@@ -146,7 +185,7 @@ export const CyberEventDetail = () => {
                   <div className="text-center p-4 bg-gray-800/50 rounded-lg">
                     <Users className="w-5 h-5 text-cyan-400 mx-auto mb-2" />
                     <p className="text-xs text-gray-500">Capacity</p>
-                    <p className="text-sm font-medium text-white">{event.attendees}/{event.attendeeLimit}</p>
+                    <p className="text-sm font-medium text-white">{event.attendeeLimit} max</p>
                   </div>
                   <div className="text-center p-4 bg-gray-800/50 rounded-lg">
                     <Shield className="w-5 h-5 text-cyan-400 mx-auto mb-2" />
@@ -222,67 +261,175 @@ export const CyberEventDetail = () => {
           <div className="lg:col-span-1">
             <Card className="bg-gray-900 border-gray-800 sticky top-24">
               <CardContent className="p-6 space-y-6">
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Price</p>
-                  <p className="text-3xl font-bold text-cyan-400">{event.price}</p>
-                </div>
-
-                {/* Capacity Bar */}
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-400">Spots Filled</span>
-                    <span className="text-white font-medium">{capacityPercentage}%</span>
-                  </div>
-                  <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full rounded-full transition-all duration-500 ${capacityPercentage >= 80 ? 'bg-orange-500' : 'bg-cyan-500'}`}
-                      style={{ width: `${capacityPercentage}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">
-                    {event.attendeeLimit - event.attendees} spots remaining
-                  </p>
-                </div>
-
-                <Button 
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white" 
-                  size="lg"
-                  onClick={handleRSVP}
-                >
-                  {event.inviteOnly ? (
-                    <>
-                      <Lock className="w-4 h-4 mr-2" />
-                      Request Invitation
-                    </>
-                  ) : (
-                    <>
-                      <Crown className="w-4 h-4 mr-2" />
-                      RSVP Now
-                    </>
-                  )}
-                </Button>
-
-                <Separator className="bg-gray-800" />
-
-                <div>
-                  <p className="text-sm text-gray-500 mb-3">Hosted By</p>
-                  <div className="space-y-2">
-                    {event.hosts.map((host, i) => (
-                      <div key={i} className="flex items-center gap-3 p-2 bg-gray-800/50 rounded-lg">
-                        <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                          <Shield className="w-4 h-4 text-cyan-400" />
-                        </div>
-                        <span className="text-sm text-gray-300">{host}</span>
+                {!showRegistration ? (
+                  <>
+                    {/* Pricing */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                          <Tag className="w-3 h-3 mr-1" />
+                          Early Bird Pricing
+                        </Badge>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                      <div className="flex items-baseline gap-3">
+                        <p className="text-4xl font-bold text-cyan-400">{event.earlyBirdPrice}</p>
+                        <p className="text-xl text-gray-500 line-through">{event.price}</p>
+                      </div>
+                      <p className="text-sm text-orange-400 mt-2">
+                        ⏰ Early bird ends {event.earlyBirdDeadline}
+                      </p>
+                    </div>
 
-                <div className="text-center pt-4">
-                  <p className="text-xs text-gray-600">
-                    Questions? Contact our events team
-                  </p>
-                </div>
+                    {/* Pre-Order Progress */}
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="text-gray-400">Pre-Orders</span>
+                        <span className="text-white font-medium">{event.preOrders} of {event.attendeeLimit}</span>
+                      </div>
+                      <div className="h-3 bg-gray-800 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500"
+                          style={{ width: `${preOrderPercentage}%` }}
+                        />
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2">
+                        {spotsRemaining} spots remaining
+                      </p>
+                    </div>
+
+                    <Button 
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-6 text-lg" 
+                      onClick={handlePreOrder}
+                    >
+                      {event.inviteOnly ? (
+                        <>
+                          <Lock className="w-5 h-5 mr-2" />
+                          Request Pre-Order
+                        </>
+                      ) : (
+                        <>
+                          <Ticket className="w-5 h-5 mr-2" />
+                          Pre-Order Now
+                        </>
+                      )}
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-gray-700 text-gray-300 hover:bg-gray-800"
+                    >
+                      <CreditCard className="w-4 h-4 mr-2" />
+                      Register Interest
+                    </Button>
+
+                    <Separator className="bg-gray-800" />
+
+                    <div>
+                      <p className="text-sm text-gray-500 mb-3">Hosted By</p>
+                      <div className="space-y-2">
+                        {event.hosts.map((host, i) => (
+                          <div key={i} className="flex items-center gap-3 p-2 bg-gray-800/50 rounded-lg">
+                            <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                              <Shield className="w-4 h-4 text-cyan-400" />
+                            </div>
+                            <span className="text-sm text-gray-300">{host}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="text-center pt-4 space-y-2">
+                      <p className="text-xs text-gray-600">
+                        Secure payment • Full refund until 7 days before
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Questions? <span className="text-cyan-400 cursor-pointer">Contact our events team</span>
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  /* Registration Form */
+                  <form onSubmit={handleSubmitRegistration} className="space-y-4">
+                    <div className="text-center mb-6">
+                      <h3 className="text-xl font-display font-bold text-white mb-2">
+                        {event.inviteOnly ? 'Request Pre-Order' : 'Pre-Order Registration'}
+                      </h3>
+                      <p className="text-sm text-gray-400">
+                        Secure your spot at {event.earlyBirdPrice}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-gray-300">Full Name *</Label>
+                      <Input
+                        id="name"
+                        placeholder="John Smith"
+                        className="bg-gray-800 border-gray-700 text-white"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-gray-300">Email *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="john@company.com"
+                        className="bg-gray-800 border-gray-700 text-white"
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="company" className="text-gray-300">Company</Label>
+                      <Input
+                        id="company"
+                        placeholder="Company Name"
+                        className="bg-gray-800 border-gray-700 text-white"
+                        value={formData.company}
+                        onChange={(e) => setFormData({...formData, company: e.target.value})}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="title" className="text-gray-300">Job Title</Label>
+                      <Input
+                        id="title"
+                        placeholder="CISO, VP Security, etc."
+                        className="bg-gray-800 border-gray-700 text-white"
+                        value={formData.title}
+                        onChange={(e) => setFormData({...formData, title: e.target.value})}
+                      />
+                    </div>
+
+                    <Button 
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
+                    >
+                      <Mail className="w-4 h-4 mr-2" />
+                      {event.inviteOnly ? 'Submit Request' : 'Complete Pre-Order'}
+                    </Button>
+
+                    <Button 
+                      type="button"
+                      variant="ghost" 
+                      className="w-full text-gray-400 hover:text-white"
+                      onClick={() => setShowRegistration(false)}
+                    >
+                      Cancel
+                    </Button>
+
+                    {event.inviteOnly && (
+                      <p className="text-xs text-center text-gray-500">
+                        Invite-only events require approval. We'll review your request within 48 hours.
+                      </p>
+                    )}
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>

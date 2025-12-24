@@ -144,7 +144,7 @@ export const CyberSocial = () => {
       <WhyThisMatters />
 
       {/* Trending Events Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-gray-950">
+      <section id="events-section" className="py-20 bg-gradient-to-b from-background to-gray-950">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-10">
             <div>

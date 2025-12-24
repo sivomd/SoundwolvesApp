@@ -1,30 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Users, Lock, Flame, Crown, ChevronRight, Music, Utensils } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Lock, Flame, Crown, ChevronRight, Music, Utensils, Tag, Ticket } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
+import { getEventStatusDisplay } from '@/data/cyberEventsData';
 
 export const CyberEventCard = ({ event, featured = false }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleRSVP = (e) => {
+  const handleAction = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (event.inviteOnly) {
-      toast.info('This is an invite-only event', {
-        description: 'Request an invitation to attend this exclusive gathering.'
+    
+    if (event.status === 'sold-out') {
+      toast.info('This event is sold out', {
+        description: 'Join the waitlist to be notified of cancellations.'
+      });
+    } else if (event.inviteOnly) {
+      toast.success('Pre-Order Request Submitted!', {
+        description: 'Our team will review your request and send an invitation if approved.'
       });
     } else {
-      toast.success('RSVP Submitted!', {
-        description: 'You will receive a confirmation email shortly.'
+      toast.success('Pre-Order Confirmed!', {
+        description: `You've secured your spot! Early bird pricing ends ${event.earlyBirdDeadline}.`
       });
     }
   };
 
-  const capacityPercentage = Math.round((event.attendees / event.attendeeLimit) * 100);
-  const isAlmostFull = capacityPercentage >= 80;
+  const statusDisplay = getEventStatusDisplay(event);
+  const spotsRemaining = event.attendeeLimit - event.preOrders;
+  const isLimitedSpots = spotsRemaining <= 10;
 
   return (
     <Link to={`/cyber-social/event/${event.id}`}>
@@ -58,11 +65,11 @@ export const CyberEventCard = ({ event, featured = false }) => {
             )}
           </div>
 
-          {/* Capacity Badge */}
+          {/* Status Badge */}
           <div className="absolute top-3 right-3">
-            <Badge className={`border-none ${isAlmostFull ? 'bg-orange-500/90 text-white' : 'bg-gray-800/90 text-gray-300'}`}>
-              <Users className="w-3 h-3 mr-1" />
-              {event.attendees}/{event.attendeeLimit}
+            <Badge className={`${statusDisplay.color} text-white border-none`}>
+              <Ticket className="w-3 h-3 mr-1" />
+              {event.preOrders > 0 ? `${event.preOrders} Pre-Orders` : statusDisplay.text}
             </Badge>
           </div>
 
@@ -75,6 +82,15 @@ export const CyberEventCard = ({ event, featured = false }) => {
               {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
             </Badge>
           </div>
+
+          {/* Limited Spots Warning */}
+          {isLimitedSpots && (
+            <div className="absolute bottom-3 right-3">
+              <Badge className="bg-orange-500/90 text-white border-none animate-pulse">
+                Only {spotsRemaining} spots left!
+              </Badge>
+            </div>
+          )}
         </div>
 
         <CardContent className="p-5 space-y-4">
@@ -117,22 +133,39 @@ export const CyberEventCard = ({ event, featured = false }) => {
             )}
           </div>
 
-          {/* Price & CTA */}
-          <div className="flex items-center justify-between pt-3 border-t border-gray-800">
-            <div>
-              <p className="text-xs text-gray-500">Starting from</p>
-              <p className="text-lg font-bold text-cyan-400">{event.price}</p>
+          {/* Pricing */}
+          <div className="flex items-center gap-3 pt-2 border-t border-gray-800">
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <p className="text-lg font-bold text-cyan-400">{event.earlyBirdPrice}</p>
+                <p className="text-sm text-gray-500 line-through">{event.price}</p>
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                  <Tag className="w-3 h-3 mr-1" />
+                  Early Bird
+                </Badge>
+              </div>
+              <p className="text-xs text-gray-500">Ends {event.earlyBirdDeadline}</p>
             </div>
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10 group/btn"
-              onClick={handleRSVP}
-            >
-              {event.inviteOnly ? 'Request Invite' : 'RSVP Now'}
-              <ChevronRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-            </Button>
           </div>
+
+          {/* CTA */}
+          <Button 
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white group/btn"
+            onClick={handleAction}
+          >
+            {event.inviteOnly ? (
+              <>
+                <Lock className="w-4 h-4 mr-2" />
+                Request Pre-Order
+              </>
+            ) : (
+              <>
+                <Ticket className="w-4 h-4 mr-2" />
+                Pre-Order Now
+              </>
+            )}
+            <ChevronRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
+          </Button>
         </CardContent>
       </Card>
     </Link>

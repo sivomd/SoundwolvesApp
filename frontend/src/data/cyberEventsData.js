@@ -1,4 +1,5 @@
 // Cybersecurity Social Events Data - Premium NJ Cyber Culture
+// 2026 Event Schedule - Registration & Pre-Order Available
 
 export const cyberEventTypes = [
   { id: 'all', name: 'All Events', icon: 'Shield' },
@@ -74,18 +75,21 @@ export const cyberEvents = [
     subtitle: 'An Evening of Strategy & Fine Cuisine',
     type: 'dinner',
     venue: cyberVenues[2],
-    date: 'Jan 23, 2025',
-    dateISO: '2025-01-23T19:00:00',
+    date: 'Jan 23, 2026',
+    dateISO: '2026-01-23T19:00:00',
     time: '7:00 PM',
     endTime: '10:30 PM',
     image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800',
     description: 'Join 12 select CISOs for an intimate five-course dinner exploring zero trust architecture beyond the boardroom. Michelin-trained chef, curated wine pairings, and conversations that shape enterprise security.',
     attendeeLimit: 12,
-    attendees: 9,
+    attendees: 0,
+    preOrders: 4,
     inviteOnly: true,
     rsvpRequired: true,
     dressCode: 'Business Elegant',
-    price: 'Complimentary (Invite Only)',
+    price: '$350',
+    earlyBirdPrice: '$275',
+    earlyBirdDeadline: 'Dec 31, 2025',
     highlights: [
       'Five-Course Tasting Menu',
       'Curated Wine Pairings',
@@ -96,7 +100,8 @@ export const cyberEvents = [
     hosts: ['NJ Cyber Council', 'SecureNJ Alliance'],
     entertainment: 'Ambient Jazz Quartet',
     trending: true,
-    featured: true
+    featured: true,
+    status: 'pre-order' // pre-order, registration-open, sold-out, waitlist
   },
   {
     id: 102,
@@ -104,18 +109,21 @@ export const cyberEvents = [
     subtitle: 'Sunset Conversations on Tomorrow\'s Threats',
     type: 'rooftop',
     venue: cyberVenues[1],
-    date: 'Feb 6, 2025',
-    dateISO: '2025-02-06T18:00:00',
+    date: 'Feb 12, 2026',
+    dateISO: '2026-02-12T18:00:00',
     time: '6:00 PM',
     endTime: '10:00 PM',
     image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800',
     description: 'As the sun sets over Manhattan, threat intelligence leaders gather to share insights off the record. Premium cocktails, stunning views, and the kind of intel you won\'t find in any report.',
     attendeeLimit: 40,
-    attendees: 28,
+    attendees: 0,
+    preOrders: 12,
     inviteOnly: false,
     rsvpRequired: true,
     dressCode: 'Smart Casual',
-    price: '$150',
+    price: '$175',
+    earlyBirdPrice: '$125',
+    earlyBirdDeadline: 'Jan 15, 2026',
     highlights: [
       'Manhattan Skyline Views',
       'Premium Open Bar',
@@ -126,7 +134,8 @@ export const cyberEvents = [
     hosts: ['CyberNJ Foundation'],
     entertainment: 'Ambient DJ',
     trending: true,
-    featured: true
+    featured: true,
+    status: 'pre-order'
   },
   {
     id: 103,
@@ -134,18 +143,21 @@ export const cyberEvents = [
     subtitle: 'Leadership, Burnout & Building Resilient Teams',
     type: 'fireside',
     venue: cyberVenues[0],
-    date: 'Feb 13, 2025',
-    dateISO: '2025-02-13T18:30:00',
+    date: 'Feb 26, 2026',
+    dateISO: '2026-02-26T18:30:00',
     time: '6:30 PM',
     endTime: '9:00 PM',
     image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800',
     description: 'An intimate fireside conversation with Fortune 500 CISOs on the topics that matter most: team wellbeing, leadership under pressure, and building security cultures that last.',
     attendeeLimit: 25,
-    attendees: 22,
+    attendees: 0,
+    preOrders: 8,
     inviteOnly: true,
     rsvpRequired: true,
     dressCode: 'Business Casual',
-    price: 'Complimentary (Invite Only)',
+    price: '$225',
+    earlyBirdPrice: '$175',
+    earlyBirdDeadline: 'Jan 31, 2026',
     highlights: [
       'Fortune 500 CISO Panel',
       'Interactive Q&A',
@@ -156,7 +168,8 @@ export const cyberEvents = [
     hosts: ['CISO Circle NJ'],
     entertainment: 'Acoustic Jazz Duo',
     trending: true,
-    featured: false
+    featured: false,
+    status: 'pre-order'
   },
   {
     id: 104,
@@ -164,18 +177,21 @@ export const cyberEvents = [
     subtitle: 'Where Security Minds Converge',
     type: 'salon',
     venue: cyberVenues[3],
-    date: 'Feb 20, 2025',
-    dateISO: '2025-02-20T19:00:00',
+    date: 'Mar 12, 2026',
+    dateISO: '2026-03-12T19:00:00',
     time: '7:00 PM',
     endTime: '11:00 PM',
     image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800',
     description: 'Our signature monthly salon returns. Live jazz, rare whiskeys, and candid conversations about AI-powered threats and defenses. The ideas born here shape tomorrow\'s security landscape.',
     attendeeLimit: 50,
-    attendees: 38,
+    attendees: 0,
+    preOrders: 18,
     inviteOnly: false,
     rsvpRequired: true,
     dressCode: 'Cocktail Attire',
-    price: '$85',
+    price: '$95',
+    earlyBirdPrice: '$75',
+    earlyBirdDeadline: 'Feb 15, 2026',
     highlights: [
       'Live Jazz Performance',
       'Rare Whiskey Tasting',
@@ -186,7 +202,8 @@ export const cyberEvents = [
     hosts: ['NJ Cyber Salon Society'],
     entertainment: 'Live Jazz Trio',
     trending: false,
-    featured: true
+    featured: true,
+    status: 'pre-order'
   },
   {
     id: 105,
@@ -194,18 +211,21 @@ export const cyberEvents = [
     subtitle: 'Executive Dinner with Statue of Liberty Views',
     type: 'dinner',
     venue: cyberVenues[4],
-    date: 'Mar 6, 2025',
-    dateISO: '2025-03-06T18:30:00',
+    date: 'Mar 26, 2026',
+    dateISO: '2026-03-26T18:30:00',
     time: '6:30 PM',
     endTime: '10:00 PM',
     image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800',
     description: 'The most prestigious cyber dinner in the tri-state. 20 hand-selected executives. Iconic views. Conversations that move industries. By invitation only.',
     attendeeLimit: 20,
-    attendees: 18,
+    attendees: 0,
+    preOrders: 6,
     inviteOnly: true,
     rsvpRequired: true,
     dressCode: 'Black Tie Optional',
-    price: 'Complimentary (Invite Only)',
+    price: '$500',
+    earlyBirdPrice: '$400',
+    earlyBirdDeadline: 'Feb 28, 2026',
     highlights: [
       'Statue of Liberty Views',
       'Seven-Course Tasting',
@@ -216,7 +236,8 @@ export const cyberEvents = [
     hosts: ['Garden State Cyber Alliance'],
     entertainment: 'String Quartet',
     trending: true,
-    featured: true
+    featured: true,
+    status: 'pre-order'
   },
   {
     id: 106,
@@ -224,18 +245,21 @@ export const cyberEvents = [
     subtitle: 'Where Deals Are Made & Ideas Flow',
     type: 'lounge',
     venue: cyberVenues[0],
-    date: 'Mar 13, 2025',
-    dateISO: '2025-03-13T21:00:00',
+    date: 'Apr 9, 2026',
+    dateISO: '2026-04-09T21:00:00',
     time: '9:00 PM',
     endTime: '1:00 AM',
     image: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=800',
     description: 'The after-hours gathering for cyber professionals who know the best connections happen late. Premium spirits, ambient beats, and conversations that lead somewhere.',
     attendeeLimit: 60,
-    attendees: 42,
+    attendees: 0,
+    preOrders: 15,
     inviteOnly: false,
     rsvpRequired: true,
     dressCode: 'Upscale Casual',
-    price: '$65',
+    price: '$85',
+    earlyBirdPrice: '$65',
+    earlyBirdDeadline: 'Mar 15, 2026',
     highlights: [
       'Premium Spirit Selection',
       'Ambient DJ Set',
@@ -246,7 +270,8 @@ export const cyberEvents = [
     hosts: ['CyberNightNJ'],
     entertainment: 'Ambient Electronic DJ',
     trending: false,
-    featured: false
+    featured: false,
+    status: 'pre-order'
   },
   {
     id: 107,
@@ -254,18 +279,21 @@ export const cyberEvents = [
     subtitle: 'Preparing for the Post-Quantum Era',
     type: 'salon',
     venue: cyberVenues[1],
-    date: 'Mar 20, 2025',
-    dateISO: '2025-03-20T17:30:00',
+    date: 'Apr 23, 2026',
+    dateISO: '2026-04-23T17:30:00',
     time: '5:30 PM',
     endTime: '9:00 PM',
     image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800',
     description: 'An exclusive roundtable on quantum computing\'s impact on cryptography. Leading researchers, CISOs, and policymakers discuss timelines, threats, and transition strategies.',
     attendeeLimit: 30,
-    attendees: 24,
+    attendees: 0,
+    preOrders: 10,
     inviteOnly: true,
     rsvpRequired: true,
     dressCode: 'Business Casual',
-    price: 'Complimentary (Invite Only)',
+    price: '$275',
+    earlyBirdPrice: '$225',
+    earlyBirdDeadline: 'Mar 31, 2026',
     highlights: [
       'Expert Panel Discussion',
       'Quantum Threat Briefing',
@@ -276,7 +304,8 @@ export const cyberEvents = [
     hosts: ['NJ Quantum Security Initiative'],
     entertainment: 'None',
     trending: true,
-    featured: true
+    featured: true,
+    status: 'pre-order'
   },
   {
     id: 108,
@@ -284,18 +313,21 @@ export const cyberEvents = [
     subtitle: 'Elevating Voices, Building Bridges',
     type: 'fireside',
     venue: cyberVenues[2],
-    date: 'Mar 27, 2025',
-    dateISO: '2025-03-27T18:00:00',
+    date: 'May 7, 2026',
+    dateISO: '2026-05-07T18:00:00',
     time: '6:00 PM',
     endTime: '9:30 PM',
     image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800',
     description: 'Celebrating and connecting women leaders in cybersecurity. Inspiring conversations, mentorship moments, and an evening of empowerment at one of NJ\'s finest venues.',
     attendeeLimit: 45,
-    attendees: 40,
+    attendees: 0,
+    preOrders: 22,
     inviteOnly: false,
     rsvpRequired: true,
     dressCode: 'Cocktail Attire',
-    price: '$95',
+    price: '$125',
+    earlyBirdPrice: '$95',
+    earlyBirdDeadline: 'Apr 15, 2026',
     highlights: [
       'Women CISO Panel',
       'Mentorship Matching',
@@ -306,7 +338,76 @@ export const cyberEvents = [
     hosts: ['Women in Cyber NJ', 'SecureHer Alliance'],
     entertainment: 'Harpist',
     trending: true,
-    featured: true
+    featured: true,
+    status: 'pre-order'
+  },
+  {
+    id: 109,
+    title: 'Summer Cyber Soirée',
+    subtitle: 'The Season\'s Premier Networking Evening',
+    type: 'rooftop',
+    venue: cyberVenues[1],
+    date: 'Jun 18, 2026',
+    dateISO: '2026-06-18T19:00:00',
+    time: '7:00 PM',
+    endTime: '11:00 PM',
+    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800',
+    description: 'Kick off summer with the most anticipated cyber networking event of the season. Rooftop views, craft cocktails, live entertainment, and connections that last.',
+    attendeeLimit: 75,
+    attendees: 0,
+    preOrders: 28,
+    inviteOnly: false,
+    rsvpRequired: true,
+    dressCode: 'Summer Elegant',
+    price: '$150',
+    earlyBirdPrice: '$110',
+    earlyBirdDeadline: 'May 20, 2026',
+    highlights: [
+      'Rooftop Sunset Views',
+      'Live Jazz Ensemble',
+      'Signature Cocktails',
+      'Industry Awards',
+      'Summer Networking'
+    ],
+    hosts: ['NJ Cyber Council', 'CyberNJ Foundation'],
+    entertainment: 'Live Jazz Ensemble',
+    trending: true,
+    featured: true,
+    status: 'pre-order'
+  },
+  {
+    id: 110,
+    title: 'CISO Retreat: Strategic Planning',
+    subtitle: 'A Day of Vision, Strategy & Connection',
+    type: 'dinner',
+    venue: cyberVenues[4],
+    date: 'Sep 10, 2026',
+    dateISO: '2026-09-10T10:00:00',
+    time: '10:00 AM',
+    endTime: '8:00 PM',
+    image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800',
+    description: 'A full-day executive retreat for CISOs to step back, strategize, and connect. Morning workshops, afternoon discussions, evening dinner with Liberty views.',
+    attendeeLimit: 30,
+    attendees: 0,
+    preOrders: 8,
+    inviteOnly: true,
+    rsvpRequired: true,
+    dressCode: 'Business Casual to Business Elegant',
+    price: '$750',
+    earlyBirdPrice: '$600',
+    earlyBirdDeadline: 'Aug 1, 2026',
+    highlights: [
+      'Full-Day Program',
+      'Strategic Workshops',
+      'Peer Discussions',
+      'Gourmet Lunch & Dinner',
+      'Executive Networking'
+    ],
+    hosts: ['CISO Circle NJ', 'Garden State Cyber Alliance'],
+    entertainment: 'Evening String Quartet',
+    trending: false,
+    featured: true,
+    status: 'pre-order'
   }
 ];
 
@@ -318,3 +419,11 @@ export const getTrendingCyberEvents = () => cyberEvents.filter(e => e.trending);
 export const getInviteOnlyCyberEvents = () => cyberEvents.filter(e => e.inviteOnly);
 export const getCyberVenueById = (id) => cyberVenues.find(v => v.id === parseInt(id));
 export const getFeaturedVenues = () => cyberVenues.filter(v => v.featured);
+
+// Get event status display
+export const getEventStatusDisplay = (event) => {
+  if (event.status === 'sold-out') return { text: 'Sold Out', color: 'bg-red-500' };
+  if (event.status === 'waitlist') return { text: 'Join Waitlist', color: 'bg-orange-500' };
+  if (event.status === 'registration-open') return { text: 'Register Now', color: 'bg-green-500' };
+  return { text: 'Pre-Order Now', color: 'bg-cyan-500' };
+};

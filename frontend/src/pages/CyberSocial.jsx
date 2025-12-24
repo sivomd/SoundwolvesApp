@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Shield, Lock, Users, Flame, Building, Music, Utensils, MapPin, Calendar, Clock, Crown, ArrowRight, Star, Sparkles, Eye, ChevronRight, Ticket, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 import { cyberEvents, cyberVenues, cyberEventTypes, getFeaturedCyberEvents, getTrendingCyberEvents, getFeaturedVenues } from '@/data/cyberEventsData';
 import { CyberEventCard } from '@/components/cyber/CyberEventCard';
 import { CyberVenueCard } from '@/components/cyber/CyberVenueCard';

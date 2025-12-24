@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown } from 'lucide-react';
+import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +20,7 @@ export const Navbar = () => {
     { path: '/', label: 'Discover', icon: Zap },
     { path: '/events', label: 'Events', icon: Calendar },
     { path: '/djs', label: 'DJs', icon: Users },
+    { path: '/cyber-social', label: 'Cyber Social', icon: Shield, highlight: true },
     { path: '/tickets', label: 'Tickets', icon: Ticket },
     { path: '/membership', label: 'Wolves Pass', icon: Crown }
   ];

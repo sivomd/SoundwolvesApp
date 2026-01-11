@@ -7,11 +7,14 @@ import { featuredConference } from '@/data/cyberEventsData';
 
 export const ConferencePopup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dontShowAgain, setDontShowAgain] = useState(false);
 
   useEffect(() => {
-    // Check if popup was dismissed in this session
-    const dismissed = sessionStorage.getItem('conference_popup_dismissed');
-    if (!dismissed) {
+    // Check if user opted to never show again (localStorage) or dismissed this session (sessionStorage)
+    const neverShow = localStorage.getItem('conference_popup_never_show');
+    const sessionDismissed = sessionStorage.getItem('conference_popup_dismissed');
+    
+    if (!neverShow && !sessionDismissed) {
       // Show popup after 2 seconds
       const timer = setTimeout(() => {
         setIsOpen(true);
@@ -22,7 +25,14 @@ export const ConferencePopup = () => {
 
   const handleClose = () => {
     setIsOpen(false);
-    sessionStorage.setItem('conference_popup_dismissed', 'true');
+    
+    if (dontShowAgain) {
+      // Permanently hide the popup
+      localStorage.setItem('conference_popup_never_show', 'true');
+    } else {
+      // Just hide for this session
+      sessionStorage.setItem('conference_popup_dismissed', 'true');
+    }
   };
 
   if (!isOpen || !featuredConference) return null;
@@ -149,6 +159,24 @@ export const ConferencePopup = () => {
             <p className="text-xs text-center text-gray-600">
               Limited seats available • Business Professional attire
             </p>
+
+            {/* Don't Show Again Checkbox */}
+            <div className="flex items-center justify-center gap-2 pt-2">
+              <input
+                type="checkbox"
+                id="dontShowAgain"
+                checked={dontShowAgain}
+                onChange={(e) => setDontShowAgain(e.target.checked)}
+                className="w-4 h-4 rounded border-gray-600 bg-gray-800 text-orange-500 focus:ring-orange-500 focus:ring-offset-gray-900 cursor-pointer"
+                data-testid="dont-show-again-checkbox"
+              />
+              <label 
+                htmlFor="dontShowAgain" 
+                className="text-xs text-gray-500 cursor-pointer hover:text-gray-400 transition-colors"
+              >
+                Don't show this again
+              </label>
+            </div>
           </div>
         </div>
       </div>

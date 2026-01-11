@@ -11,6 +11,7 @@ import { RecommendedEvents } from '@/components/RecommendedEvents';
 import { TrendingMusicReleases } from '@/components/TrendingMusicReleases';
 import { EventCountdown } from '@/components/EventCountdown';
 import { FriendsAttending } from '@/components/FriendsAttending';
+import { FeaturedConferenceBanner } from '@/components/FeaturedConferenceBanner';
 
 export const Home = () => {
   const [selectedCity, setSelectedCity] = useState('All');

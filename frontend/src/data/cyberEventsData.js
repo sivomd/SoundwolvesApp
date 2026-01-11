@@ -66,10 +66,80 @@ export const cyberVenues = [
     description: 'Iconic Liberty State Park venue. Where landmark cyber partnerships are forged.',
     amenities: ['Statue of Liberty Views', 'Private Events', 'Award-Winning Chef'],
     featured: true
+  },
+  {
+    id: 6,
+    name: 'BITS Pilani Goa Campus',
+    type: 'Technology Conference Center',
+    location: 'Goa, India',
+    address: 'NH 17B, Zuarinagar, Sancoale, Goa 403726, India',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800',
+    description: 'Premier academic institution hosting cutting-edge cybersecurity and technology conferences. Where innovation meets education.',
+    amenities: ['Conference Halls', 'Research Labs', 'Campus Networking'],
+    featured: true
   }
 ];
 
+// Featured Conference Event
+export const featuredConference = {
+  id: 200,
+  title: 'Made in India: Next-Gen Threat Intelligence',
+  subtitle: 'Securing the Future with Made in India Cybersecurity',
+  type: 'conference',
+  venue: {
+    id: 6,
+    name: 'BITS Pilani Goa Campus',
+    type: 'Technology Conference Center',
+    location: 'Goa, India',
+    address: 'NH 17B, Zuarinagar, Sancoale, Goa 403726, India',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800',
+    amenities: ['Conference Halls', 'Research Labs', 'Campus Networking']
+  },
+  date: 'Feb 15, 2026',
+  dateISO: '2026-02-15T09:00:00',
+  time: '9:00 AM',
+  endTime: '6:00 PM',
+  image: 'https://customer-assets.emergentagent.com/job_sound-stage-6/artifacts/lodxmy9c_Feb15Goa%20Conference%201.jpeg',
+  description: 'Join Chief Strategy Officers, CISOs, and cybersecurity leaders at BITS Pilani Goa for an exclusive conference on Next-Gen Threat Intelligence. Experience the launch of TIX (Threat Intelligence Excellence) and explore cutting-edge tracks including Network Engineering, SSDLC, MLOps, DevSecOps, and more. A landmark event positioning India at the forefront of global cybersecurity innovation.',
+  attendeeLimit: 500,
+  attendees: 0,
+  preOrders: 127,
+  inviteOnly: false,
+  rsvpRequired: true,
+  dressCode: 'Business Professional',
+  price: '$299',
+  earlyBirdPrice: '$199',
+  earlyBirdDeadline: 'Jan 31, 2026',
+  highlights: [
+    'Launch of TIX - Threat Intelligence Excellence',
+    'Network Engineering & SSDLC Tracks',
+    'MLOps & DevSecOps Deep Dives',
+    'MkOps & Threat Intelligence Sessions',
+    'BITS Pilani Goa + Telangana Initiative',
+    'Hyderabad DSCI CCOE Partnership',
+    'CSO & CISO Networking Summit',
+    'Research Foundation Showcase'
+  ],
+  hosts: ['DSCI', 'SOUNDWOLVES', 'CE World', 'Research Foundation'],
+  partners: ['Suman TV', 'Keeimedia', 'Cybersecurity ONG'],
+  entertainment: 'None',
+  trending: true,
+  featured: true,
+  status: 'pre-order',
+  tracks: [
+    { name: 'Network Engineering', icon: 'Network' },
+    { name: 'SSDLC', icon: 'Code' },
+    { name: 'MkOps', icon: 'Settings' },
+    { name: 'MLOps', icon: 'Brain' },
+    { name: 'DevSecOps', icon: 'Shield' },
+    { name: 'Threat Intelligence', icon: 'Eye' }
+  ],
+  location: 'Goa, India',
+  isInternational: true
+};
+
 export const cyberEvents = [
+  featuredConference,
   {
     id: 101,
     title: 'The Zero Trust Dinner',

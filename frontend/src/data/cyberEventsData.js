@@ -1,8 +1,9 @@
-// Cybersecurity Social Events Data - Premium NJ Cyber Culture
+// Cybersecurity Social Events Data - Premium NJ Cyber Culture & Global Tech Conferences
 // 2026 Event Schedule - Registration & Pre-Order Available
 
 export const cyberEventTypes = [
   { id: 'all', name: 'All Events', icon: 'Shield' },
+  { id: 'conference', name: 'Conferences', icon: 'Globe' },
   { id: 'salon', name: 'Cyber Salons', icon: 'Users' },
   { id: 'dinner', name: 'Executive Dinners', icon: 'Utensils' },
   { id: 'fireside', name: 'CISO Fireside', icon: 'Flame' },

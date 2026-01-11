@@ -136,6 +136,9 @@ export const Home = () => {
       {/* Trending Section */}
       <TrendingSection limit={3} />
 
+      {/* Featured Cybersecurity Conference */}
+      <FeaturedConferenceBanner />
+
       {/* Recommended For You */}
       <RecommendedEvents limit={4} />
 

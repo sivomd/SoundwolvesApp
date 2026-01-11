@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Users, Lock, Flame, Crown, ChevronRight, Music, Utensils, Tag, Ticket } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Lock, Flame, Crown, ChevronRight, Music, Utensils, Tag, Ticket, Globe } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -76,6 +76,7 @@ export const CyberEventCard = ({ event, featured = false }) => {
           {/* Event Type Badge */}
           <div className="absolute bottom-3 left-3">
             <Badge variant="outline" className="bg-black/50 border-gray-600 text-gray-300 backdrop-blur-sm">
+              {event.type === 'conference' && <Globe className="w-3 h-3 mr-1" />}
               {event.type === 'dinner' && <Utensils className="w-3 h-3 mr-1" />}
               {event.type === 'lounge' && <Music className="w-3 h-3 mr-1" />}
               {event.type === 'fireside' && <Flame className="w-3 h-3 mr-1" />}

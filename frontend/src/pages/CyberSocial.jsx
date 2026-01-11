@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Shield, Lock, Users, Flame, Building, Music, Utensils, MapPin, Calendar, Clock, Crown, ArrowRight, Star, Sparkles, Eye, ChevronRight, Ticket, Tag } from 'lucide-react';
+import { Shield, Lock, Users, Flame, Building, Music, Utensils, MapPin, Calendar, Clock, Crown, ArrowRight, Star, Sparkles, Eye, ChevronRight, Ticket, Tag, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { cyberEvents, cyberVenues, cyberEventTypes, getFeaturedCyberEvents, getTrendingCyberEvents, getFeaturedVenues } from '@/data/cyberEventsData';
+import { cyberEvents, cyberVenues, cyberEventTypes, getFeaturedCyberEvents, getTrendingCyberEvents, getFeaturedVenues, featuredConference } from '@/data/cyberEventsData';
 import { CyberEventCard } from '@/components/cyber/CyberEventCard';
 import { CyberVenueCard } from '@/components/cyber/CyberVenueCard';
 import { WhyThisMatters } from '@/components/cyber/WhyThisMatters';
 
 const iconMap = {
-  Shield, Users, Utensils, Flame, Building, Music
+  Shield, Users, Utensils, Flame, Building, Music, Globe
 };
 
 export const CyberSocial = () => {
@@ -142,6 +142,107 @@ export const CyberSocial = () => {
 
       {/* Why This Matters Section */}
       <WhyThisMatters />
+
+      {/* Featured Conference Banner - Made in India */}
+      <section className="py-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-950/30 via-amber-950/20 to-green-950/30" />
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row gap-8 items-center">
+            {/* Event Image */}
+            <div className="lg:w-1/2">
+              <Link to={`/cyber-social/event/${featuredConference.id}`}>
+                <div className="relative group cursor-pointer">
+                  <img 
+                    src={featuredConference.image}
+                    alt={featuredConference.title}
+                    className="w-full rounded-2xl shadow-2xl shadow-orange-500/20 transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                    <Badge className="bg-gradient-to-r from-orange-500 to-amber-500 text-white border-none shadow-lg">
+                      <Globe className="w-3 h-3 mr-1" />
+                      International Conference
+                    </Badge>
+                    <Badge className="bg-green-500/90 text-white border-none">
+                      🇮🇳 Made in India
+                    </Badge>
+                  </div>
+                  <div className="absolute bottom-4 right-4">
+                    <Badge className="bg-red-500/90 text-white border-none animate-pulse">
+                      {featuredConference.preOrders}+ Pre-Orders
+                    </Badge>
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+            {/* Event Details */}
+            <div className="lg:w-1/2 space-y-6">
+              <div>
+                <div className="flex gap-2 mb-4">
+                  <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    {featuredConference.date}
+                  </Badge>
+                  <Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30">
+                    <MapPin className="w-3 h-3 mr-1" />
+                    Goa, India
+                  </Badge>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-3">
+                  {featuredConference.title}
+                </h2>
+                <p className="text-lg text-gray-300 mb-4">{featuredConference.subtitle}</p>
+                <p className="text-gray-400">{featuredConference.description.slice(0, 200)}...</p>
+              </div>
+
+              {/* Conference Tracks */}
+              <div>
+                <p className="text-sm text-gray-500 mb-3">Conference Tracks:</p>
+                <div className="flex flex-wrap gap-2">
+                  {featuredConference.tracks.map((track, i) => (
+                    <Badge key={i} variant="outline" className="bg-gray-800/50 border-gray-700 text-gray-300">
+                      {track.name}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Partners */}
+              <div>
+                <p className="text-sm text-gray-500 mb-2">Hosted & Partnered By:</p>
+                <p className="text-gray-400 text-sm">
+                  {[...featuredConference.hosts, ...featuredConference.partners].join(' • ')}
+                </p>
+              </div>
+
+              {/* Pricing & CTA */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-bold text-orange-400">{featuredConference.earlyBirdPrice}</span>
+                    <span className="text-lg text-gray-500 line-through">{featuredConference.price}</span>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                      Save $100
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-gray-500">Early bird ends {featuredConference.earlyBirdDeadline}</p>
+                </div>
+                <Link to={`/cyber-social/event/${featuredConference.id}`}>
+                  <Button size="lg" className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg shadow-orange-500/25">
+                    <Ticket className="w-5 h-5 mr-2" />
+                    Pre-Order Conference Pass
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Trending Events Section */}
       <section id="events-section" className="py-20 bg-gradient-to-b from-background to-gray-950">

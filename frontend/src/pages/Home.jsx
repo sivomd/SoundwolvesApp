@@ -11,6 +11,8 @@ import { RecommendedEvents } from '@/components/RecommendedEvents';
 import { TrendingMusicReleases } from '@/components/TrendingMusicReleases';
 import { EventCountdown } from '@/components/EventCountdown';
 import { FriendsAttending } from '@/components/FriendsAttending';
+import { FeaturedConferenceBanner } from '@/components/FeaturedConferenceBanner';
+import { ConferencePopup } from '@/components/ConferencePopup';
 
 export const Home = () => {
   const [selectedCity, setSelectedCity] = useState('All');
@@ -25,6 +27,9 @@ export const Home = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Conference Popup Modal */}
+      <ConferencePopup />
+
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         {/* Background Video/Image with Overlay */}
@@ -54,9 +59,9 @@ export const Home = () => {
             The Cultural Nightlife Operating System
           </Badge>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight">
-            Experience <span className="text-gradient-gold">Nightlife</span>
+            The Intersection of <span className="text-gradient-gold">Nightlife</span>
             <br />
-            Like Never Before
+            and <span className="text-gradient-wolf">Networking</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             Discover exclusive events, book legendary DJs, and unlock VIP experiences across North America's hottest venues
@@ -134,6 +139,9 @@ export const Home = () => {
 
       {/* Trending Section */}
       <TrendingSection limit={3} />
+
+      {/* Featured Cybersecurity Conference */}
+      <FeaturedConferenceBanner />
 
       {/* Recommended For You */}
       <RecommendedEvents limit={4} />

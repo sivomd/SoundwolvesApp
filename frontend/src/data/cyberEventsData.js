@@ -114,7 +114,7 @@ export const featuredConference = {
     'Launch of TIX - Threat Intelligence Excellence',
     'Network Engineering & SSDLC Tracks',
     'MLOps & DevSecOps Deep Dives',
-    'MkOps & Threat Intelligence Sessions',
+    'Threat Intelligence Sessions',
     'BITS Pilani Goa + Telangana Initiative',
     'Hyderabad DSCI CCOE Partnership',
     'CSO & CISO Networking Summit',
@@ -129,7 +129,6 @@ export const featuredConference = {
   tracks: [
     { name: 'Network Engineering', icon: 'Network' },
     { name: 'SSDLC', icon: 'Code' },
-    { name: 'MkOps', icon: 'Settings' },
     { name: 'MLOps', icon: 'Brain' },
     { name: 'DevSecOps', icon: 'Shield' },
     { name: 'Threat Intelligence', icon: 'Eye' }

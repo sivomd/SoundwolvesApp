@@ -12,7 +12,7 @@ import { CyberVenueCard } from '@/components/cyber/CyberVenueCard';
 import { WhyThisMatters } from '@/components/cyber/WhyThisMatters';
 
 const iconMap = {
-  Shield, Users, Utensils, Flame, Building, Music
+  Shield, Users, Utensils, Flame, Building, Music, Globe
 };
 
 export const CyberSocial = () => {

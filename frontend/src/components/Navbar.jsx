@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown, Shield } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Zap, Calendar, Users, User, Ticket, Crown, Shield, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout, loading } = useAuth();
 
-  React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('soundwolves_current_user') || '{}');
-    if (user.id) {
-      setCurrentUser(user);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsOpen(false);
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
     }
-  }, [location]);
+  };
 
   const navItems = [
     { path: '/', label: 'Discover', icon: Zap },
@@ -25,14 +30,17 @@ export const Navbar = () => {
     { path: '/membership', label: 'Wolves Pass', icon: Crown }
   ];
 
+  // Don't show user-specific UI while loading
+  const showAuthenticatedUI = isAuthenticated && user && !loading;
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <img 
-              src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/tjj77kbh_SoundWolves.png" 
+            <img
+              src="https://customer-assets.emergentagent.com/job_dj-wolves-app/artifacts/tjj77kbh_SoundWolves.png"
               alt="SoundWolves Logo"
               className="h-8 object-contain"
             />
@@ -68,23 +76,21 @@ export const Navbar = () => {
 
           {/* User Actions */}
           <div className="hidden md:flex items-center space-x-3">
-            {currentUser ? (
+            {showAuthenticatedUI ? (
               <>
-                <Link to={currentUser.type === 'dj' ? '/dj-dashboard' : '/profile'}>
+                <Link to={user.user_type === 'dj' ? '/dj-dashboard' : '/profile'}>
                   <Button variant="ghost" size="sm" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    {currentUser.djName || currentUser.name}
+                    {user.dj_name || user.name}
                   </Button>
                 </Link>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
-                  onClick={() => {
-                    localStorage.removeItem('soundwolves_current_user');
-                    setCurrentUser(null);
-                    window.location.href = '/';
-                  }}
+                  onClick={handleLogout}
+                  className="flex items-center gap-2"
                 >
+                  <LogOut className="w-4 h-4" />
                   Logout
                 </Button>
               </>
@@ -108,6 +114,7 @@ export const Navbar = () => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -128,7 +135,7 @@ export const Navbar = () => {
                     'flex items-center gap-3 px-4 py-3 rounded-lg transition-all',
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-glow'
-                      : item.highlight 
+                      : item.highlight
                         ? 'text-cyan-400 hover:bg-cyan-400/10'
                         : 'text-foreground hover:bg-muted'
                   )}
@@ -139,27 +146,23 @@ export const Navbar = () => {
               );
             })}
             <div className="pt-4 space-y-2">
-              {currentUser ? (
+              {showAuthenticatedUI ? (
                 <>
-                  <Link 
-                    to={currentUser.type === 'dj' ? '/dj-dashboard' : '/profile'}
+                  <Link
+                    to={user.user_type === 'dj' ? '/dj-dashboard' : '/profile'}
                     onClick={() => setIsOpen(false)}
                   >
                     <Button variant="outline" className="w-full justify-start">
                       <User className="w-5 h-5 mr-2" />
-                      {currentUser.djName || currentUser.name}
+                      {user.dj_name || user.name}
                     </Button>
                   </Link>
-                  <Button 
-                    variant="destructive" 
+                  <Button
+                    variant="destructive"
                     className="w-full"
-                    onClick={() => {
-                      localStorage.removeItem('soundwolves_current_user');
-                      setCurrentUser(null);
-                      setIsOpen(false);
-                      window.location.href = '/';
-                    }}
+                    onClick={handleLogout}
                   >
+                    <LogOut className="w-5 h-5 mr-2" />
                     Logout
                   </Button>
                 </>
